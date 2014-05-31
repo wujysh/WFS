@@ -32,6 +32,9 @@ void readCommand() {
 
         } else if (command == "menu" || command == "help") {
 
+        } else if (command == "exit" || command == "quit") {
+            cout << "Good bye!" << endl;
+            break;
         }
     }
 }
