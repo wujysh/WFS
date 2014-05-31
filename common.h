@@ -3,19 +3,24 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <cstdlib>
+#include <cstdio>
 #include <string>
 #include <vector>
 #include <stack>
 #include <list>
 #include <set>
+#include <map>
 using namespace std;
 
 // Global variables
 fstream block, user, setting;
 
 string cur_dir;
-stack<int> path;  // whole path from root to current directory
-
+vector<int> path;  // whole path from root to current directory
+bool formatted;
+string username;
+map<string, string> users;
 
 // Global structures
 struct FileSystem {

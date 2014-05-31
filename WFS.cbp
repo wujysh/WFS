@@ -32,9 +32,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="allocate.h" />
+		<Unit filename="base.h" />
+		<Unit filename="command.h" />
 		<Unit filename="common.h" />
-		<Unit filename="format.cpp" />
+		<Unit filename="directory.h" />
+		<Unit filename="format.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="memory.h" />
+		<Unit filename="user.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />
