@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1401432534 source:/home/wujy/Documents/操作系统/WFS/format.cpp
+
+1401432550 source:/home/wujy/Documents/操作系统/WFS/main.cpp
+	"common.h"
+
+1401433273 /home/wujy/Documents/操作系统/WFS/common.h
+	<algorithm>
+	<iostream>
+	<fstream>
+	<sstream>
+	<iomanip>
+	<string>
+	<vector>
+	<stack>
+	<list>
+	<set>
+
