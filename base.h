@@ -190,3 +190,54 @@ Inode getInode(int index) {
     }
     return inodes[index];
 }
+
+// Block 100# ~ 1023#
+string getDataPath(int index) {
+    int blockNum = index + 100;
+    stringstream ss;
+    ss << blockNum;
+    string blockNumStr;
+    ss >> blockNumStr;
+    string blockPath = ".\\disk\\data\\" + blockNumStr + ".disk";
+    return blockPath;
+}
+
+void readDirectory(int index) {
+    block.open(getDataPath(index).c_str(), ios::in);
+
+    directories[index].clear();
+    string name;
+    int inode;
+    while (block >> name >> inode) {
+        directories[index].push_back(Directory(name, inode));
+    }
+
+    block.close();
+}
+
+void writeDirectory(int index) {
+    block.open(getDataPath(index).c_str(), ios::out);
+
+    vector<Directory>::iterator it;
+    for (it = directories[index].begin(); it != directories[index].end(); it++) {
+        block << it->name << " " << it->inode << endl;
+    }
+
+    block.close();
+}
+
+void readData(int index) {
+    block.open(getDataPath(index).c_str(), ios::in);
+
+
+
+    block.close();
+}
+
+void writeData(int index) {
+    block.open(getDataPath(index).c_str(), ios::out);
+
+
+
+    block.close();
+}

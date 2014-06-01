@@ -60,6 +60,7 @@ struct Directory {
     Directory() {}
     Directory(string _name, int _inode) : name(_name), inode(_inode) {}
 };
+map<int, vector<Directory> > directories;  // Block No. => Directory structure
 
 
 // Global functions

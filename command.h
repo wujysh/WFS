@@ -37,9 +37,16 @@ void readCommand() {
         } else if (command == "exit" || command == "quit") {
             break;
         } else if (command == "debug") {
+            string op;
             int index;
-            cin >> index;
-            printInode(index);
+            cin >> op;
+            if (op == "-i") {
+                cin >> index;
+                printInode(index);
+            } else if (op == "-d") {
+                cin >> index;
+                printDirectory(index);
+            }
         }
     }
 }
