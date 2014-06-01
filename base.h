@@ -86,38 +86,52 @@ string getInodePath(int index) {
     return blockPath;
 }
 
-void readInode(int index) {
+//void readInode(int index) {
+//    block.open(getInodePath(index).c_str(), ios::in);
+//
+//    // block.seekg();
+//    int offset = index % 64;
+//    for (int i = 0; i < offset; i++) {
+//        for (int j = 0; j < 8; j++) {
+//            string line;
+//            getline(block, line);
+//        }
+//    }
+//
+//    Inode inode;
+//    block >> inode.mode;
+//    block >> inode.uid;
+//    block >> inode.gid;
+//    block >> inode.file_size;
+//    block >> inode.block_cnt;
+//    for (int i = 0; i < 10; i++) {
+//        block >> inode.addr[i];
+//    }
+//    block >> inode.addr1;
+//    inodes[index] = inode;
+//
+//    block.close();
+//}
+
+void readInodeOneBlock(int index) {
     block.open(getInodePath(index).c_str(), ios::in);
 
-    // block.seekg();
-    int offset = index % 64;
-    for (int i = 0; i < offset; i++) {
-        for (int j = 0; j < 8; j++) {
-            string line;
-            getline(block, line);
+    int offset = index / 64 * 64;
+    for (int i = offset; i < offset+64; i++) {
+        Inode inode;
+        block >> inode.mode;
+        block >> inode.uid;
+        block >> inode.gid;
+        block >> inode.file_size;
+        block >> inode.block_cnt;
+        for (int j = 0; j < 10; j++) {
+            block >> inode.addr[j];
         }
+        block >> inode.addr1;
+        inodes[i] = inode;
     }
-
-    Inode inode;
-    block >> inode.mode;
-    block >> inode.uid;
-    block >> inode.gid;
-    block >> inode.file_size;
-    block >> inode.block_cnt;
-    for (int i = 0; i < 10; i++) {
-        block >> inode.addr[i];
-    }
-    block >> inode.addr1;
-    inodes[index] = inode;
 
     block.close();
-}
-
-Inode getInode(int index) {
-    if (inodes.find(index) == inodes.end()) {
-        readInode(index);
-    }
-    return inodes[index];
 }
 
 void writeInodeOneBlock(Inode inode, int index) {
@@ -168,4 +182,11 @@ void writeInodeAll() {
         }
     }
     block.close();
+}
+
+Inode getInode(int index) {
+    if (inodes.find(index) == inodes.end()) {
+        readInodeOneBlock(index);
+    }
+    return inodes[index];
 }

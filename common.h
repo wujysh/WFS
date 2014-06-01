@@ -48,7 +48,7 @@ struct Inode {
     int block_cnt;
     vector<int> addr;  // direct
     int addr1;  // single indirect
-    Inode() : addr(10, -1), addr1(-1) {}
+    Inode() : mode("----------"), uid(-1), gid(-1), file_size(0), block_cnt(0), addr(10, -1), addr1(-1) {}
     Inode(string _mode, int _uid, int _gid, int _fs, int _bc, vector<int> _addr, int _addr1)
     : mode(_mode), uid(_uid), gid(_gid), file_size(_fs), block_cnt(_bc), addr(_addr), addr1(_addr1) {}
 };

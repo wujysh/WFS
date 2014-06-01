@@ -35,7 +35,7 @@ bool format() {
     }
     addr[0] = -1;
     for (int i = 4; i < 5760; i++) {
-        inodes[i] = Inode("----------", -1, -1, 0, 0, addr, -1);  // empty inodes
+        inodes[i] = Inode();  // empty inodes
     }
     writeInodeAll();
 

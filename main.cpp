@@ -19,6 +19,7 @@ void saveSystem() {
     cout << "Saving changes ..." << endl;
     writeIdleInode();
     writeIdleBlock();
+    //writeInodeAll();
     system("cls");
 }
 
