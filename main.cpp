@@ -1,7 +1,7 @@
 /**
  * Wujy File System (WFS)
- * Version 0.1
- * 2014.5.31
+ * Version 0.1.5
+ * 2014.6.1
  */
 #include "common.h"
 #include "format.h"
@@ -10,18 +10,24 @@
 
 void initSystem() {
     cout << "Initializing ..." << endl;
-    readSetting(formatted);
+    readIdleInode();
+    readIdleBlock();
+    system("cls");
+}
+
+void saveSystem() {
+    cout << "Saving changes ..." << endl;
+    writeIdleInode();
+    writeIdleBlock();
     system("cls");
 }
 
 int main() {
-    initSystem();
+    readSetting(formatted);
 
     if (!formatted) {
         cout << "The disk hasn't formatted. Please wait a second ..." << endl;
         if (format()) {
-            formatted = true;
-            writeSetting(formatted);
             system("cls");
             cout << "Formatted successfully." << endl;
         } else {
@@ -32,21 +38,17 @@ int main() {
     }
 
     if (formatted) {
-        /// readSuper();
+        initSystem();
 
-        cout << "Please login the file system:" << endl;
-        while (!login()) {
-            system("cls");
-            cout << "Invalid username or password! Please try again." << endl;
-        }
-        system("cls");
-        cout << "Hello " << username << "! Welcome to Wujy File System." << endl;
+        switchUser();
 
         /// printMenu();
 
         readCommand();
 
-        /// writeSuper();
+        saveSystem();
+
+        cout << "Good bye!" << endl;
     }
 
     return 0;

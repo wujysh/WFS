@@ -1,7 +1,9 @@
+#include "print.h"
+
 void printPath() {
     cout << endl;
     for (int i = 0; i < path.size(); i++) {
-        cout << '/' << path[i];
+        cout << '/' << path[i].name;
     }
     cout << '>';
 }
@@ -28,13 +30,16 @@ void readCommand() {
 
         } else if (command == "write") {
 
-        } else if (command == "login") {
-
+        } else if (command == "login" || command == "logout") {
+            switchUser();
         } else if (command == "menu" || command == "help") {
 
         } else if (command == "exit" || command == "quit") {
-            cout << "Good bye!" << endl;
             break;
+        } else if (command == "debug") {
+            int index;
+            cin >> index;
+            printInode(index);
         }
     }
 }
