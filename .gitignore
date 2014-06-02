@@ -1,3 +1,4 @@
+*.save
 disk/
 !disk/super/0.disk
 
