@@ -42,7 +42,7 @@ int main() {
         initSystem();
 
         switchUser();
-
+        initPath();
         /// printMenu();
 
         readCommand();

@@ -202,6 +202,7 @@ string getDataPath(int index) {
     return blockPath;
 }
 
+/// TODO: directory operations need rework
 void readDirectory(int index) {
     block.open(getDataPath(index).c_str(), ios::in);
 
@@ -209,7 +210,8 @@ void readDirectory(int index) {
     string name;
     int inode;
     while (block >> name >> inode) {
-        directories[index].push_back(Directory(name, inode));
+        directories[index][name] = inode;
+        //directories[index].push_back(Directory(name, inode));
     }
 
     block.close();
@@ -218,12 +220,20 @@ void readDirectory(int index) {
 void writeDirectory(int index) {
     block.open(getDataPath(index).c_str(), ios::out);
 
-    vector<Directory>::iterator it;
+    //vector<Directory>::iterator it;
+    map<string, int>::iterator it;
     for (it = directories[index].begin(); it != directories[index].end(); it++) {
-        block << it->name << " " << it->inode << endl;
+        block << it->first << " " << it->second << endl;
     }
 
     block.close();
+}
+
+map<string, int> getDirectory(int index) {
+    if (directories.find(index) == directories.end()) {
+        readDirectory(index);
+    }
+    return directories[index];
 }
 
 void readData(int index) {

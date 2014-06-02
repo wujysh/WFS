@@ -16,12 +16,12 @@ void printInode(int index) {
 }
 
 void printDirectory(int index) {
-    vector<Directory> directory = directories[index];
-    vector<Directory>::iterator it;
+    map<string, int> directory = getDirectory(index);
+    map<string, int>::iterator it;
 
-    cout << "DUBUG Directory (Block #" << index << "): " << endl;
+    cout << "DUBUG Directory (Inode #" << index << "): " << endl;
     for (it = directory.begin(); it != directory.end(); it++) {
-        cout << it->name << " " << it->inode << endl;
+        cout << it->first << " " << it->second << endl;
     }
     cout << endl;
 

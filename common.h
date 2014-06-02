@@ -22,6 +22,8 @@ string cur_dir;
 struct Path {
     int inode;
     string name;
+    Path() {}
+    Path(int _inode, string _name) : inode(_inode), name(_name) {}
 };
 vector<Path> path;  // whole path from root to current directory
 
@@ -60,7 +62,8 @@ struct Directory {
     Directory() {}
     Directory(string _name, int _inode) : name(_name), inode(_inode) {}
 };
-map<int, vector<Directory> > directories;  // Block No. => Directory structure
+//map<int, vector<Directory> > directories;  // Inode index => Directory structure
+map<int, map<string, int> > directories;
 
 
 // Global functions

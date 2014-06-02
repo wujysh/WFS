@@ -40,9 +40,12 @@ bool format() {
     writeInodeAll();
 
     directories.clear();
-    directories[0].push_back(Directory("wujy", 1));
-    directories[0].push_back(Directory("admin", 2));
-    directories[0].push_back(Directory("test", 3));
+    //directories[0].push_back(Directory("wujy", 1));
+    //directories[0].push_back(Directory("admin", 2));
+    //directories[0].push_back(Directory("test", 3));
+    directories[0]["wujy"] = 1;
+    directories[0]["admin"] = 2;
+    directories[0]["test"] = 3;
     writeDirectory(0);
 
     return true;
