@@ -65,3 +65,10 @@ map<int, vector<Directory> > directories;  // Block No. => Directory structure
 
 // Global functions
 
+void clear_screen(void) {
+#ifdef __linux__
+    system("clear");
+#else
+    system("cls");
+#endif
+}

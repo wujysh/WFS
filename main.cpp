@@ -1,6 +1,6 @@
 /**
  * Wujy File System (WFS)
- * Version 0.1.5
+ * Version 0.1.6
  * 2014.6.1
  */
 #include "common.h"
@@ -12,7 +12,7 @@ void initSystem() {
     cout << "Initializing ..." << endl;
     readIdleInode();
     readIdleBlock();
-    system("cls");
+    clear_screen();
 }
 
 void saveSystem() {
@@ -20,7 +20,7 @@ void saveSystem() {
     writeIdleInode();
     writeIdleBlock();
     //writeInodeAll();
-    system("cls");
+    clear_screen();
 }
 
 int main() {
@@ -29,10 +29,10 @@ int main() {
     if (!formatted) {
         cout << "The disk hasn't formatted. Please wait a second ..." << endl;
         if (format()) {
-            system("cls");
+            clear_screen();
             cout << "Formatted successfully." << endl;
         } else {
-            system("cls");
+            clear_screen();
             cout << "Something wrong. Please try again." << endl;
         };
         cout << endl;

@@ -54,10 +54,10 @@ void switchUser() {
     clear_screen();
     cout << "Please login the file system:" << endl;
     while (!login()) {
-        clear_screen();
+        system("cls");
         cout << "Invalid username or password! Please try again." << endl;
     }
-    clear_screen();
+    system("cls");
     cout << "Hello " << username << "! Welcome to Wujy File System." << endl;
 }
 

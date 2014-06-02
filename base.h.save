@@ -1,19 +1,19 @@
 // Block 0#
 void readSetting(bool &formatted) {
-    setting.open("./disk/super/0.disk", ios::in);
+    setting.open("./disk/super\\0.disk", ios::in);
     setting >> formatted;
     setting.close();
 }
 
 void writeSetting(bool &formatted) {
-    setting.open("./disk/super/0.disk", ios::out);
+    setting.open(".\\disk\\super\\0.disk", ios::out);
     setting << formatted << endl;
     setting.close();
 }
 
 // Block 1#
 void readUser() {
-    user.open("./disk/super/1.disk", ios::in);
+    user.open(".\\disk\\super\\1.disk", ios::in);
     users.clear();
     string name, pwd;
     int uid, gid, role;
@@ -24,7 +24,7 @@ void readUser() {
 }
 
 void writeUser() {
-    user.open("./disk/super/1.disk", ios::out);
+    user.open(".\\disk\\super\\1.disk", ios::out);
     map<string, User>::iterator it;
     for (it = users.begin(); it != users.end(); it++) {
         User u = it->second;
@@ -35,7 +35,7 @@ void writeUser() {
 
 // Block 2#
 void readIdleInode() {
-    block.open("./disk/super/2.disk", ios::in);
+    block.open(".\\disk\\super\\2.disk", ios::in);
     idle_inode_stack.clear();
     int x;
     while (block >> x) {
@@ -45,7 +45,7 @@ void readIdleInode() {
 }
 
 void writeIdleInode() {
-    block.open("./disk/super/2.disk", ios::out);
+    block.open(".\\disk\\super\\2.disk", ios::out);
     for (int i = 0; i < idle_inode_stack.size(); i++) {
         if (i) block << ' ';
         block << idle_inode_stack[i];
@@ -56,7 +56,7 @@ void writeIdleInode() {
 
 // Block 3#
 void readIdleBlock() {
-    block.open("./disk/super/3.disk", ios::in);
+    block.open(".\\disk\\super\\3.disk", ios::in);
     idle_block_stack.clear();
     int x;
     while (block >> x) {
@@ -66,7 +66,7 @@ void readIdleBlock() {
 }
 
 void writeIdleBlock() {
-    block.open("./disk/super/3.disk", ios::out);
+    block.open(".\\disk\\super\\3.disk", ios::out);
     for (int i = 0; i < idle_block_stack.size(); i++) {
         if (i) block << ' ';
         block << idle_block_stack[i];
@@ -82,7 +82,7 @@ string getInodePath(int index) {
     ss << blockNum;
     string blockNumStr;
     ss >> blockNumStr;
-    string blockPath = "./disk/inode/" + blockNumStr + ".disk";
+    string blockPath = ".\\disk\\inode\\" + blockNumStr + ".disk";
     return blockPath;
 }
 
@@ -198,7 +198,7 @@ string getDataPath(int index) {
     ss << blockNum;
     string blockNumStr;
     ss >> blockNumStr;
-    string blockPath = "./disk/data/" + blockNumStr + ".disk";
+    string blockPath = ".\\disk\\data\\" + blockNumStr + ".disk";
     return blockPath;
 }
 
