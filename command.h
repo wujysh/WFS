@@ -1,19 +1,12 @@
+#ifndef _PRINT_H_
+#define _PRINT_H_
 #include "print.h"
+#endif // _PRINT_H_
+
+#ifndef _DIRECTORY_H_
+#define _DIRECTORY_H_
 #include "directory.h"
-
-void printPath() {
-    cout << endl;
-    for (int i = 1; i < path.size(); i++) {
-        cout << '/' << path[i].name;
-    }
-    cout << "> ";
-}
-
-void initPath() {
-    path.clear();
-    path.push_back(Path(0, ""));
-    cd(username);
-}
+#endif // _DIRECTORY_H_
 
 void readCommand() {
     string command;
@@ -24,7 +17,7 @@ void readCommand() {
         transform(command.begin(), command.end(), command.begin(), ::tolower);
 
         if (command == "dir" || command == "ls") {
-
+            ls();
         } else if (command == "cd") {
             string name;
             cin >> name;
@@ -43,7 +36,6 @@ void readCommand() {
 
         } else if (command == "login" || command == "logout") {
             switchUser();
-            initPath();
         } else if (command == "menu" || command == "help") {
 
         } else if (command == "exit" || command == "quit") {

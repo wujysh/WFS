@@ -12,7 +12,7 @@ void initSystem() {
     cout << "Initializing ..." << endl;
     readIdleInode();
     readIdleBlock();
-    clear_screen();
+    clearScreen();
 }
 
 void saveSystem() {
@@ -20,7 +20,7 @@ void saveSystem() {
     writeIdleInode();
     writeIdleBlock();
     //writeInodeAll();
-    clear_screen();
+    clearScreen();
 }
 
 int main() {
@@ -29,10 +29,10 @@ int main() {
     if (!formatted) {
         cout << "The disk hasn't formatted. Please wait a second ..." << endl;
         if (format()) {
-            clear_screen();
+            clearScreen();
             cout << "Formatted successfully." << endl;
         } else {
-            clear_screen();
+            clearScreen();
             cout << "Something wrong. Please try again." << endl;
         };
         cout << endl;
@@ -42,7 +42,6 @@ int main() {
         initSystem();
 
         switchUser();
-        initPath();
         /// printMenu();
 
         readCommand();

@@ -1,7 +1,7 @@
 void printInode(int index) {
     Inode inode = getInode(index);
 
-    cout << "DUBUG Inode #" << index << ": " << endl;
+    //cout << "DUBUG Inode #" << index << ": " << endl;
     cout << inode.mode << endl;
     cout << inode.uid << endl;
     cout << inode.gid << endl;
@@ -19,11 +19,19 @@ void printDirectory(int index) {
     map<string, int> directory = getDirectory(index);
     map<string, int>::iterator it;
 
-    cout << "DUBUG Directory (Inode #" << index << "): " << endl;
+    //cout << "DUBUG Directory (Inode #" << index << "): " << endl;
     for (it = directory.begin(); it != directory.end(); it++) {
         cout << it->first << " " << it->second << endl;
     }
     cout << endl;
 
     block.close();
+}
+
+void printPath() {
+    cout << endl;
+    for (int i = 1; i < path.size(); i++) {
+        cout << '/' << path[i].name;
+    }
+    cout << "> ";
 }

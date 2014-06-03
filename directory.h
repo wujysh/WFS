@@ -1,3 +1,8 @@
+#ifndef _PRINT_H_
+#define _PRINT_H_
+#include "print.h"
+#endif // _PRINT_H_
+
 void cd(string name) {
     if (name == "..") {
         if (path.size() > 1) {
@@ -18,5 +23,5 @@ void cd(string name) {
 }
 
 void ls() {
-
+    printDirectory(path.back().inode);
 }

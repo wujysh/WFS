@@ -68,7 +68,7 @@ map<int, map<string, int> > directories;
 
 // Global functions
 
-void clear_screen(void) {
+void clearScreen(void) {
 #ifdef __linux__
     system("clear");
 #else

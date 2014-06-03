@@ -3,6 +3,11 @@
 #include "base.h"
 #endif // _BASE_H_
 
+#ifndef _DIRECTORY_H_
+#define _DIRECTORY_H_
+#include "directory.h"
+#endif // _DIRECTORY_H_
+
 #ifdef __linux__
     void inputPassword(string &pwd) {
         cin >> pwd;
@@ -51,13 +56,18 @@ bool login() {
 }
 
 void switchUser() {
-    clear_screen();
+    clearScreen();
     cout << "Please login the file system:" << endl;
     while (!login()) {
-        clear_screen();
+        clearScreen();
         cout << "Invalid username or password! Please try again." << endl;
     }
-    clear_screen();
+    clearScreen();
+
+    path.clear();
+    path.push_back(Path(0, ""));
+    cd(username);
+
     cout << "Hello " << username << "! Welcome to Wujy File System." << endl;
 }
 
