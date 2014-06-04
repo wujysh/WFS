@@ -72,5 +72,34 @@ void rmdir(string name) {
         return;
     }
 
+    int childIndex = directory[name];
+    Inode childInode = inodes[childIndex];
 
+    if (childInode.mode[0] != 'd') {
+        cout << "rmdir: failed to remove ‘" << name << "’: Not a directory" << endl;
+        return;
+    }
+
+    map<string, int> childDirectory = getDirectory(childIndex);
+
+    if (!childDirectory.empty()) {
+        cout << "rmdir: failed to remove ‘" << name << "’: Directory not empty" << endl;
+        return;
+    }
+
+    for (int i = 0; i < childInode.block_cnt; i++) {
+        if (i < 10) {
+            releaseBlock(childInode.addr[i]);
+        } else {
+            // Indirect
+        }
+    }
+    releaseInode(childIndex);
+
+    directory.erase(name);
+    directories[index] = directory;
+    writeDirectory(childIndex);
+    writeDirectory(index);
+
+    writeInodeOneBlock(Inode(), childIndex);
 }
