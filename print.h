@@ -11,7 +11,7 @@ void printInode(int index) {
         cout << inode.addr[i];
     }
     cout << endl;
-    cout << inode.addr1 << endl << endl;
+    cout << inode.addr1 << endl;
 }
 
 void printDirectory(int index) {

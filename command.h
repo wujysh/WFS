@@ -74,13 +74,28 @@ void readCommand() {
 
         } else if (command == "exit" || command == "quit") {
             break;
+        } else if (command == "format" || command == "reset") {
+            cout << "WFS: ALERT: UNRECOVERABLE operation! Are you sure? [y/n] ";
+            options.resize(1);
+            cin >> options[0];
+            if (options[0] == "y") {
+                format();
+                cout << "Initializing ..." << endl;
+                readIdleInode();
+                readIdleBlock();
+                clearScreen();
+                cout << "Formatted successfully." << endl;
+                switchUser();
+            } else {
+                cout << "Canceled." << endl;
+            }
         } else if (command == "debug") {
             options = getOptions(2);
             if (options.size() == 2) {
                 if (options[0] == "-i") {
                     printInode(atoi(options[1].c_str()));
                 } else if (options[0] == "-d") {
-                    printDirectory(atoi(options[1].c_str()));
+                    printDirectoryDetail(atoi(options[1].c_str()));
                 } else {
                     cout << "debug: usage: debug [-i|-d] [index]" << endl;
                 }
@@ -90,6 +105,7 @@ void readCommand() {
                 cout << "debug: usage: debug [-i|-d] [index]" << endl;
             }
         } else {
+            getOptions(1);
             cout << command << ": command not found" << endl;
         }
     }

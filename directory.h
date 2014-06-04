@@ -54,10 +54,12 @@ void mkdir(string name) {
 
     directory[name] = childIndex;
     directories[index] = directory;
+    writeDirectory(childIndex);
+    writeDirectory(index);
 
-    //writeDirectory(index);
-    //writeInodeOneBlock(childInode, childIndex);
-    //writeInodeOneBlock(inode, index);
+    inodes[childIndex] = childInode;
+    writeInodeOneBlock(childInode, childIndex);
+    writeInodeOneBlock(inode, index);
 }
 
 void rmdir(string name) {
