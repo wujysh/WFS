@@ -3,6 +3,8 @@
 #include "print.h"
 #endif // _PRINT_H_
 
+#include "allocate.h"
+
 void cd(string name) {
     if (name == "..") {
         if (path.size() > 1) {
@@ -40,19 +42,22 @@ void mkdir(string name) {
         return;
     }
 
-//    int childIndex = allocateInode();
-//    Inode childInode = inodes[childIndex];
-//
-//    childInode.mode = "drwxr-x--x";
-//    childInode.uid = users[username].id;
-//    childInode.gid = users[username].gid;
-//    childInode.file_size = 4096;
-//    childInode.block_cnt = 1;
-//    childInode.addr[0] = allocateBlock();
-//
-//    directory[name] = childIndex;
-//
-//    writeInodeOneBlock(childInode, childIndex);
+    int childIndex = allocateInode();
+    Inode childInode = inodes[childIndex];
+
+    childInode.mode = "drwxr-x--x";
+    childInode.uid = users[username].id;
+    childInode.gid = users[username].gid;
+    childInode.file_size = 4096;
+    childInode.block_cnt = 1;
+    childInode.addr[0] = allocateBlock();
+
+    directory[name] = childIndex;
+    directories[index] = directory;
+
+    //writeDirectory(index);
+    //writeInodeOneBlock(childInode, childIndex);
+    //writeInodeOneBlock(inode, index);
 }
 
 void rmdir(string name) {

@@ -1,1 +1,7 @@
+int allocateInode() {
 
+}
+
+int allocateBlock() {
+
+}
