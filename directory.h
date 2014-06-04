@@ -14,7 +14,7 @@ void cd(string name) {
         map<string, int> directory = getDirectory(index);
 
         if (directory.find(name) == directory.end()) {
-            cout << "Invalid path!" << endl;
+            cout << "cd: No such file or directory" << endl;
             return;
         }
 
@@ -22,6 +22,48 @@ void cd(string name) {
     }
 }
 
-void ls() {
-    printDirectory(path.back().inode);
+void ls(bool detail) {
+    if (detail) {
+        printDirectoryDetail(path.back().inode);
+    } else {
+        printDirectory(path.back().inode);
+    }
+}
+
+void mkdir(string name) {
+    int index = path.back().inode;
+    Inode inode = getInode(index);
+    map<string, int> directory = getDirectory(index);
+
+    if (directory.find(name) != directory.end()) {
+        cout << "mkdir: cannot create directory ‘" << name << "’: File exists" << endl;
+        return;
+    }
+
+//    int childIndex = allocateInode();
+//    Inode childInode = inodes[childIndex];
+//
+//    childInode.mode = "drwxr-x--x";
+//    childInode.uid = users[username].id;
+//    childInode.gid = users[username].gid;
+//    childInode.file_size = 4096;
+//    childInode.block_cnt = 1;
+//    childInode.addr[0] = allocateBlock();
+//
+//    directory[name] = childIndex;
+//
+//    writeInodeOneBlock(childInode, childIndex);
+}
+
+void rmdir(string name) {
+    int index = path.back().inode;
+    Inode inode = getInode(index);
+    map<string, int> directory = getDirectory(index);
+
+    if (directory.find(name) == directory.end()) {
+        cout << "rmdir: failed to remove ‘"<< name << "’: No such file or directory" << endl;
+        return;
+    }
+
+
 }

@@ -36,6 +36,7 @@ struct User {
     User(string _pwd, int _id, int _gid, int _role) : password(_pwd), id(_id), gid(_gid), role(_role) {}
 };
 map<string, User> users;
+map<int, string> name_of_user, name_of_group;
 string username;
 
 vector<int> idle_inode_stack;

@@ -53,13 +53,13 @@
 
 1401638284 c:\users\wujq\documents\github\wfs\print.h
 
-1401726617 source:/home/wujy/Documents/WFS/main.cpp
+1401814765 source:/home/wujy/Documents/WFS/main.cpp
 	"common.h"
 	"format.h"
 	"user.h"
 	"command.h"
 
-1401726051 /home/wujy/Documents/WFS/common.h
+1401866967 /home/wujy/Documents/WFS/common.h
 	<algorithm>
 	<iostream>
 	<fstream>
@@ -77,17 +77,19 @@
 1401726198 /home/wujy/Documents/WFS/format.h
 	"base.h"
 
-1401726141 /home/wujy/Documents/WFS/base.h
+1401870847 /home/wujy/Documents/WFS/base.h
 
-1401723102 /home/wujy/Documents/WFS/user.h
+1401814754 /home/wujy/Documents/WFS/user.h
 	"base.h"
+	"directory.h"
 	<conio.h>
 
-1401727239 /home/wujy/Documents/WFS/command.h
+1401868737 /home/wujy/Documents/WFS/command.h
 	"print.h"
 	"directory.h"
 
-1401726498 /home/wujy/Documents/WFS/print.h
+1401868920 /home/wujy/Documents/WFS/print.h
 
-1401726995 /home/wujy/Documents/WFS/directory.h
+1401870864 /home/wujy/Documents/WFS/directory.h
+	"print.h"
 

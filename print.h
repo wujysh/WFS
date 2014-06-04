@@ -1,7 +1,6 @@
 void printInode(int index) {
     Inode inode = getInode(index);
 
-    //cout << "DUBUG Inode #" << index << ": " << endl;
     cout << inode.mode << endl;
     cout << inode.uid << endl;
     cout << inode.gid << endl;
@@ -19,13 +18,23 @@ void printDirectory(int index) {
     map<string, int> directory = getDirectory(index);
     map<string, int>::iterator it;
 
-    //cout << "DUBUG Directory (Inode #" << index << "): " << endl;
-    for (it = directory.begin(); it != directory.end(); it++) {
-        cout << it->first << " " << it->second << endl;
+    if (directory.size()) {
+        cout.flags(ios::left);
+        for (it = directory.begin(); it != directory.end(); it++) {
+            cout << setw(20) << it->first;
+        }
+        cout << endl;
     }
-    cout << endl;
+}
 
-    block.close();
+void printDirectoryDetail(int index) {
+    map<string, int> directory = getDirectory(index);
+    map<string, int>::iterator it;
+
+    for (it = directory.begin(); it != directory.end(); it++) {
+        Inode inode = getInode(it->second);
+        cout << it->second << " " << inode.mode << " "  << name_of_user[inode.uid] << " "  << name_of_group[inode.gid] << " "  << inode.file_size << " "  << it->first << endl;
+    }
 }
 
 void printPath() {

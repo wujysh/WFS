@@ -19,6 +19,8 @@ void readUser() {
     int uid, gid, role;
     while (user >> name >> pwd >> uid >> gid >> role) {
         users[name] = User(pwd, uid, gid, role);
+        name_of_user[uid] = name;
+        name_of_group[gid] = name;  // TODO: add group
     }
     user.close();
 }
@@ -146,6 +148,9 @@ void writeInodeOneBlock(Inode inode, int index) {
         block << node.gid << endl;
         block << node.file_size << endl;
         block << node.block_cnt << endl;
+        if (node.mode[0] == 'd') {
+            node.file_size = node.block_cnt * 4096;
+        }
         for (int j = 0; j < 10; j++) {
             if (j) block << " ";
             block << node.addr[j];
@@ -203,30 +208,69 @@ string getDataPath(int index) {
 }
 
 /// TODO: directory operations need rework
-void readDirectory(int index) {
-    block.open(getDataPath(index).c_str(), ios::in);
+void readDirectory(int index, int block_index) {
+    block.open(getDataPath(block_index).c_str(), ios::in);
 
-    directories[index].clear();
     string name;
     int inode;
     while (block >> name >> inode) {
         directories[index][name] = inode;
-        //directories[index].push_back(Directory(name, inode));
+    }
+
+    block.close();
+}
+
+void readDirectory(int index) {
+    Inode inode = getInode(index);
+
+    if (inode.mode[0] != 'd') {
+        return;  // not directory
+    }
+
+    directories[index].clear();
+
+    for (int i = 0; i < inode.block_cnt; i++) {
+        if (i < 10) {
+            readDirectory(index, inode.addr[i]);
+        } else {
+            // TODO: indirect
+        }
+    }
+}
+
+void writeDirectory(int index, int block_index, map<string, int>::iterator &it) {
+    block.open(getDataPath(block_index).c_str(), ios::out);
+
+    //map<string, int>::iterator it;
+    //for (it = directories[index].begin(); it != directories[index].end(); it++, cnt++) {
+    //    if (cnt >= start_from) {
+    //        block << it->first << " " << it->second << endl;
+    //    }
+    //}
+    int cnt = 0;
+    for ( ; cnt < 100 && it != directories[index].end(); it++, cnt++) {
+        block << it->first << " " << it->second << endl;
     }
 
     block.close();
 }
 
 void writeDirectory(int index) {
-    block.open(getDataPath(index).c_str(), ios::out);
+    Inode inode = getInode(index);
 
-    //vector<Directory>::iterator it;
-    map<string, int>::iterator it;
-    for (it = directories[index].begin(); it != directories[index].end(); it++) {
-        block << it->first << " " << it->second << endl;
+    if (inode.mode[0] != 'd') {
+        return;  // not directory
     }
 
-    block.close();
+    map<string, int>::iterator it = directories[index].begin();
+
+    for (int i = 0; i < inode.block_cnt; i++) {
+        if (i < 10) {
+            writeDirectory(index, inode.addr[i], it);
+        } else {
+            // TODO: indirect
+        }
+    }
 }
 
 map<string, int> getDirectory(int index) {
