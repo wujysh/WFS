@@ -150,7 +150,7 @@
 
 1401950064 h:\课程\操作系统原理\wfs\file.h
 
-1401814765 source:/home/wujy/Documents/WFS/main.cpp
+1401984915 source:/home/wujy/Documents/WFS/main.cpp
 	"common.h"
 	"format.h"
 	"user.h"
@@ -181,18 +181,18 @@
 	"directory.h"
 	<conio.h>
 
-1401980061 /home/wujy/Documents/WFS/directory.h
+1401980842 /home/wujy/Documents/WFS/directory.h
 	"print.h"
 	"allocate.h"
 
-1401980683 /home/wujy/Documents/WFS/print.h
+1401985252 /home/wujy/Documents/WFS/print.h
 
 1401872446 /home/wujy/Documents/WFS/allocate.h
 
-1401980556 /home/wujy/Documents/WFS/command.h
+1401985137 /home/wujy/Documents/WFS/command.h
 	"print.h"
 	"directory.h"
 	"file.h"
 
-1401950064 /home/wujy/Documents/WFS/file.h
+1401984977 /home/wujy/Documents/WFS/file.h
 

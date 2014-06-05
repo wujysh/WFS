@@ -43,58 +43,95 @@ void readCommand() {
                 } else if (options[0] == "-a") {
                     ls(3);
                 } else {
-                    cout << "ls: usage: ls [-a|-l|-al]" << endl;
+                    printUsage(command, "[-a|-l|-al]");
                 }
             } else {
-                ls(0);
+                if (command == "dir") {
+                    ls(2);
+                } else if (command == "ls") {
+                    ls(0);
+                }
             }
-        } else if (command == "cd") {
+        } else if (command == "cd" || command == "chdir") {
             options = getOptions(1);
             if (options.size() == 1) {
                 cd(options[0]);
             } else {
-                cout << "cd: usage: cd [dir]" << endl;
+                printUsage(command, "[dir]");
             }
         } else if (command == "mkdir") {
             options = getOptions(1);
             if (options.size() == 1) {
                 mkdir(options[0]);
             } else {
-                cout << "mkdir: usage: mkdir [dir]" << endl;
+                printUsage(command, "[dir]");
             }
         } else if (command == "rmdir") {
             options = getOptions(1);
             if (options.size() == 1) {
                 rmdir(options[0]);
             } else {
-                cout << "rmdir: usage: rmdir [dir]" << endl;
+                printUsage(command, "[dir]");
             }
-        } else if (command == "create" || command == "mk") {
+        } else if (command == "create" || command == "mk" || command == "touch") {
             options = getOptions(1);
             if (options.size() == 1) {
                 mkfile(options[0]);
             } else {
-                cout << "mk: usage: mk [file]" << endl;
+                printUsage(command, "[file]");
             }
         } else if (command == "delete" || command == "rm") {
             options = getOptions(1);
             if (options.size() == 1) {
                 rmfile(options[0]);
             } else {
-                cout << "rm: usage: rm [file]" << endl;
+                printUsage(command, "[file]");
             }
         } else if (command == "open") {
-
+            options = getOptions(1);
+            if (options.size() == 1) {
+                open(options[0]);
+            } else {
+                printUsage(command, "[file]");
+            }
         } else if (command == "close") {
-
+            options = getOptions(1);
+            if (options.size() == 1) {
+                close(options[0]);
+            } else {
+                printUsage(command, "[file]");
+            }
         } else if (command == "read") {
-
+            options = getOptions(1);
+            if (options.size() == 1) {
+                read(options[0]);
+            } else {
+                printUsage(command, "[file]");
+            }
         } else if (command == "write") {
-
+            options = getOptions(1);
+            if (options.size() == 1) {
+                write(options[0]);
+            } else {
+                printUsage(command, "[file]");
+            }
         } else if (command == "login" || command == "logout") {
             switchUser();
-        } else if (command == "menu" || command == "help") {
-
+        } else if (command == "menu" || command == "help" || command == "about") {
+            cout << "WFS console (version 0.2.0) - Made by Jiaye Wu." << endl;
+            cout << "You can use these commands. Type 'help' to see this list." << endl;
+            printHelp("ls", "[-a|-l|-al]", "List information about the FILEs in current directory.");
+            printHelp("cd", "[dir]", "Change the current working directory.");
+            printHelp("mkdir", "[dir]", "Create the DIRECTORY, if it do not already exist.");
+            printHelp("rmdir", "[dir]", "Remove the DIRECTORY, if it is empty.");
+            printHelp("mk", "[file]", "Create the FILE, if it does not already exist.");
+            printHelp("rm", "[file]", "Remove (unlink) the FILE.");  // TODO: link and unlink
+            printHelp("open", "[file]", "Open the FILE, if it exists.");
+            printHelp("close", "[file]", "Close the FILE, if it has already open.");
+            printHelp("read", "[file]", "Read the FILE, and open it if hasn't.");
+            printHelp("write", "[file]", "Write the FILE.");
+            printHelp("format", "", "Reset the file system, and you will lose data. DANGEROUS!");
+            printHelp("debug", "[-i|-d] [index]", "Output the information of Inode or Block to help debug.");
         } else if (command == "exit" || command == "quit") {
             break;
         } else if (command == "format" || command == "reset") {

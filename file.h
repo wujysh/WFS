@@ -62,3 +62,19 @@ void rmfile(string name) {
 
     writeInodeOneBlock(Inode(), childIndex);
 }
+
+void open(string name) {
+
+}
+
+void close(string name) {
+
+}
+
+void read(string name) {
+
+}
+
+void write(string name) {
+
+}

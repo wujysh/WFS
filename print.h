@@ -48,3 +48,13 @@ void printPath() {
     }
     cout << "> ";
 }
+
+void printUsage(string command, string usage) {
+    cout << command << ": usage: " << command << " " << usage << endl;
+}
+
+void printHelp(string command, string usage, string function) {
+    cout.flags(ios::left);
+    cout << setw(10) << command << setw(10) << "usage: " << command << " " << usage << endl;
+    cout << setw(10) << "" << setw(10) << "function: " << function << endl;
+}

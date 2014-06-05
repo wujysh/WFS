@@ -1,6 +1,6 @@
 /**
  * Wujy File System (WFS)
- * Version 0.1.6
+ * Version 0.2.0
  * 2014.6.1
  */
 #include "common.h"
