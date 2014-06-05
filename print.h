@@ -58,3 +58,20 @@ void printHelp(string command, string usage, string function) {
     cout << setw(10) << command << setw(10) << "usage: " << command << " " << usage << endl;
     cout << setw(10) << "" << setw(10) << "function: " << function << endl;
 }
+
+void printMenu() {
+    cout << "WFS console (version 0.2.0) - Made by Jiaye Wu." << endl;
+    cout << "You can use these commands. Type 'help' to see this list." << endl;
+    printHelp("ls", "[-a|-l|-al]", "List information about the FILEs in current directory.");
+    printHelp("cd", "[dir]", "Change the current working directory.");
+    printHelp("mkdir", "[dir]", "Create the DIRECTORY, if it do not already exist.");
+    printHelp("rmdir", "[dir]", "Remove the DIRECTORY, if it is empty.");
+    printHelp("mk", "[file]", "Create the FILE, if it does not already exist.");
+    printHelp("rm", "[file]", "Remove (unlink) the FILE.");  // TODO: link and unlink
+    printHelp("open", "[file]", "Open the FILE, if it exists.");
+    printHelp("close", "[file]", "Close the FILE, if it has already open.");
+    printHelp("read", "[file]", "Read the FILE, and open it if hasn't.");
+    printHelp("write", "[file]", "Write the FILE.");
+    printHelp("format", "", "Reset the file system, and you will lose data. DANGEROUS!");
+    printHelp("debug", "[-i|-d] [index]", "Output the information of Inode or Block to help debug.");
+}
