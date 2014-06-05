@@ -31,7 +31,7 @@ bool format() {
     inodes[0] = Inode("dr-xr-x--x", 0, 0, 4096, 1, addr, -1);  // root (MFD)
     for (int i = 1; i <= 3; i++) {
         addr[0] = i;
-        inodes[i] = Inode("drwxr-x--x", i-1, i-1, 4096, 1, addr, -1);  // three default user (UFD)
+        inodes[i] = Inode("drwx--x--x", i-1, i-1, 4096, 1, addr, -1);  // three default user (UFD)
     }
     addr[0] = -1;
     for (int i = 4; i < 5760; i++) {
@@ -40,13 +40,20 @@ bool format() {
     writeInodeAll();
 
     directories.clear();
+    directories[0]["."] = 0;
     directories[0]["wujy"] = 1;
     directories[0]["admin"] = 2;
     directories[0]["test"] = 3;
-    directories[1];
-    directories[2];
-    directories[3];
+    directories[1]["."] = 1;
+    directories[1][".."] = 0;
+    directories[2]["."] = 2;
+    directories[2][".."] = 0;
+    directories[3]["."] = 3;
+    directories[3][".."] = 0;
     writeDirectory(0);
+    writeDirectory(1);
+    writeDirectory(2);
+    writeDirectory(3);
 
     return true;
 }

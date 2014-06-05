@@ -35,10 +35,18 @@ void readCommand() {
 
         if (command == "dir" || command == "ls") {
             options = getOptions(1);
-            if (options.size() == 1 && options[0] == "-l") {
-                ls(true);  // show details
+            if (options.size() == 1) {
+                if (options[0] == "-l") {
+                    ls(1);
+                } else if (options[0] == "-al") {
+                    ls(2);
+                } else if (options[0] == "-a") {
+                    ls(3);
+                } else {
+                    cout << "ls: usage: ls [-a|-l|-al]" << endl;
+                }
             } else {
-                ls(false);
+                ls(0);
             }
         } else if (command == "cd") {
             options = getOptions(1);
@@ -110,7 +118,7 @@ void readCommand() {
                 if (options[0] == "-i") {
                     printInode(atoi(options[1].c_str()));
                 } else if (options[0] == "-d") {
-                    printDirectoryDetail(atoi(options[1].c_str()));
+                    printDirectoryDetail(atoi(options[1].c_str()), true);
                 } else {
                     cout << "debug: usage: debug [-i|-d] [index]" << endl;
                 }

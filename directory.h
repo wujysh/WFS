@@ -6,7 +6,9 @@
 #include "allocate.h"
 
 void cd(string name) {
-    if (name == "..") {
+    if (name == ".") {
+
+    } else if (name == "..") {
         if (path.size() > 1) {
             path.pop_back();
         }
@@ -16,12 +18,12 @@ void cd(string name) {
         map<string, int> directory = getDirectory(index);
 
         if (directory.find(name) == directory.end()) {
-            cout << "cd: No such file or directory" << endl;
+            cout << "cd: " << name << ": No such file or directory" << endl;
             return;
         }
 
         if (getInode(directory[name]).mode[0] != 'd') {
-            cout << "cd: Not a directory" << endl;
+            cout << "cd: " << name << ": Not a directory" << endl;
             return;
         }
 
@@ -29,11 +31,15 @@ void cd(string name) {
     }
 }
 
-void ls(bool detail) {
-    if (detail) {
-        printDirectoryDetail(path.back().inode);
-    } else {
-        printDirectory(path.back().inode);
+void ls(int type) {
+    if (type == 0) {  // ls (basic)
+        printDirectory(path.back().inode, false);
+    } else if (type == 1) {  // ls -l
+        printDirectoryDetail(path.back().inode, false);
+    } else if (type == 2) {  // ls -al
+        printDirectoryDetail(path.back().inode, true);
+    } else if (type == 3) {  // ls -a
+        printDirectory(path.back().inode, true);
     }
 }
 

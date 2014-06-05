@@ -4,6 +4,8 @@
 1401432550 source:/home/wujy/Documents/鎿嶄綔绯荤粺/WFS/main.cpp
 	"common.h"
 
+1401949762 
+
 1401433273 /home/wujy/Documents/鎿嶄綔绯荤粺/WFS/common.h
 	<algorithm>
 	<iostream>
@@ -21,6 +23,8 @@
 	"format.h"
 	"user.h"
 	"command.h"
+
+1401814765 "
 
 1401637443 c:\users\wujq\documents\github\wfs\common.h
 	<algorithm>
@@ -88,11 +92,15 @@
 	"print.h"
 	"directory.h"
 
+1401873852 .h"
+
 1401883032 /home/wujy/Documents/WFS/print.h
 
 1401896731 /home/wujy/Documents/WFS/directory.h
 	"print.h"
 	"allocate.h"
+
+1401950002 h"
 
 1401872446 /home/wujy/Documents/WFS/allocate.h
 
@@ -141,4 +149,50 @@
 	"file.h"
 
 1401950064 h:\课程\操作系统原理\wfs\file.h
+
+1401814765 source:/home/wujy/Documents/WFS/main.cpp
+	"common.h"
+	"format.h"
+	"user.h"
+	"command.h"
+
+1401946840 /home/wujy/Documents/WFS/common.h
+	<algorithm>
+	<iostream>
+	<fstream>
+	<sstream>
+	<iomanip>
+	<cstdlib>
+	<cstdio>
+	<string>
+	<vector>
+	<stack>
+	<list>
+	<set>
+	<map>
+
+1401980415 /home/wujy/Documents/WFS/format.h
+	"base.h"
+
+1401978218 /home/wujy/Documents/WFS/base.h
+
+1401814754 /home/wujy/Documents/WFS/user.h
+	"base.h"
+	"directory.h"
+	<conio.h>
+
+1401980061 /home/wujy/Documents/WFS/directory.h
+	"print.h"
+	"allocate.h"
+
+1401980683 /home/wujy/Documents/WFS/print.h
+
+1401872446 /home/wujy/Documents/WFS/allocate.h
+
+1401980556 /home/wujy/Documents/WFS/command.h
+	"print.h"
+	"directory.h"
+	"file.h"
+
+1401950064 /home/wujy/Documents/WFS/file.h
 

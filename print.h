@@ -14,26 +14,30 @@ void printInode(int index) {
     cout << inode.addr1 << endl;
 }
 
-void printDirectory(int index) {
+void printDirectory(int index, bool showHide) {
     map<string, int> directory = getDirectory(index);
     map<string, int>::iterator it;
 
-    if (directory.size()) {
-        cout.flags(ios::left);
-        for (it = directory.begin(); it != directory.end(); it++) {
+    bool isPrinted = false;
+    cout.flags(ios::left);
+    for (it = directory.begin(); it != directory.end(); it++) {
+        if (showHide || it->first[0] != '.') {
+            isPrinted = true;
             cout << setw(20) << it->first;
         }
-        cout << endl;
     }
+    if (isPrinted) cout << endl;
 }
 
-void printDirectoryDetail(int index) {
+void printDirectoryDetail(int index, bool showHide) {
     map<string, int> directory = getDirectory(index);
     map<string, int>::iterator it;
 
     for (it = directory.begin(); it != directory.end(); it++) {
-        Inode inode = getInode(it->second);
-        cout << it->second << " " << inode.mode << " "  << name_of_user[inode.uid] << " "  << name_of_group[inode.gid] << " "  << inode.file_size << " "  << it->first << endl;
+        if (showHide || it->first[0] != '.') {
+            Inode inode = getInode(it->second);
+            cout << it->second << " " << inode.mode << " "  << name_of_user[inode.uid] << " "  << name_of_group[inode.gid] << " "  << inode.file_size << " "  << it->first << endl;
+        }
     }
 }
 
