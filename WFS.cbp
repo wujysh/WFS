@@ -37,6 +37,7 @@
 		<Unit filename="command.h" />
 		<Unit filename="common.h" />
 		<Unit filename="directory.h" />
+		<Unit filename="file.h" />
 		<Unit filename="format.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="memory.h" />

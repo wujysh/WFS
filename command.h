@@ -8,6 +8,11 @@
 #include "directory.h"
 #endif // _DIRECTORY_H_
 
+#ifndef _FILE_H_
+#define _FILE_H_
+#include "file.h"
+#endif // _FILE_H_
+
 vector<string> getOptions(int n) {
     string line, op;
     vector<string> ret;
@@ -57,9 +62,19 @@ void readCommand() {
                 cout << "rmdir: usage: rmdir [dir]" << endl;
             }
         } else if (command == "create" || command == "mk") {
-
+            options = getOptions(1);
+            if (options.size() == 1) {
+                mkfile(options[0]);
+            } else {
+                cout << "mk: usage: mk [file]" << endl;
+            }
         } else if (command == "delete" || command == "rm") {
-
+            options = getOptions(1);
+            if (options.size() == 1) {
+                rmfile(options[0]);
+            } else {
+                cout << "rm: usage: rm [file]" << endl;
+            }
         } else if (command == "open") {
 
         } else if (command == "close") {

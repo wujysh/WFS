@@ -20,6 +20,11 @@ void cd(string name) {
             return;
         }
 
+        if (getInode(directory[name]).mode[0] != 'd') {
+            cout << "cd: Not a directory" << endl;
+            return;
+        }
+
         path.push_back(Path(directory[name], name));
     }
 }
@@ -38,14 +43,14 @@ void mkdir(string name) {
     map<string, int> directory = getDirectory(index);
 
     if (directory.find(name) != directory.end()) {
-        cout << "mkdir: cannot create directory ‘" << name << "’: File exists" << endl;
+        cout << "mkdir: cannot create directory '" << name << "': File exists" << endl;
         return;
     }
 
     int childIndex = allocateInode();
     Inode childInode = inodes[childIndex];
 
-    childInode.mode = "drwxr-x--x";
+    childInode.mode = "drwxr-xr-x";
     childInode.uid = users[username].id;
     childInode.gid = users[username].gid;
     childInode.file_size = 4096;
@@ -68,7 +73,7 @@ void rmdir(string name) {
     map<string, int> directory = getDirectory(index);
 
     if (directory.find(name) == directory.end()) {
-        cout << "rmdir: failed to remove ‘"<< name << "’: No such file or directory" << endl;
+        cout << "rmdir: failed to remove '"<< name << "': No such file or directory" << endl;
         return;
     }
 
@@ -76,14 +81,14 @@ void rmdir(string name) {
     Inode childInode = inodes[childIndex];
 
     if (childInode.mode[0] != 'd') {
-        cout << "rmdir: failed to remove ‘" << name << "’: Not a directory" << endl;
+        cout << "rmdir: failed to remove '" << name << "': Not a directory" << endl;
         return;
     }
 
     map<string, int> childDirectory = getDirectory(childIndex);
 
     if (!childDirectory.empty()) {
-        cout << "rmdir: failed to remove ‘" << name << "’: Directory not empty" << endl;
+        cout << "rmdir: failed to remove '" << name << "': Directory not empty" << endl;
         return;
     }
 

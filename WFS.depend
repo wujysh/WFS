@@ -96,3 +96,49 @@
 
 1401872446 /home/wujy/Documents/WFS/allocate.h
 
+1401814765 source:h:\课程\操作系统原理\wfs\main.cpp
+	"common.h"
+	"format.h"
+	"user.h"
+	"command.h"
+
+1401946840 h:\课程\操作系统原理\wfs\common.h
+	<algorithm>
+	<iostream>
+	<fstream>
+	<sstream>
+	<iomanip>
+	<cstdlib>
+	<cstdio>
+	<string>
+	<vector>
+	<stack>
+	<list>
+	<set>
+	<map>
+
+1401882556 h:\课程\操作系统原理\wfs\format.h
+	"base.h"
+
+1401891557 h:\课程\操作系统原理\wfs\base.h
+
+1401814754 h:\课程\操作系统原理\wfs\user.h
+	"base.h"
+	"directory.h"
+	<conio.h>
+
+1401950002 h:\课程\操作系统原理\wfs\directory.h
+	"print.h"
+	"allocate.h"
+
+1401883032 h:\课程\操作系统原理\wfs\print.h
+
+1401872446 h:\课程\操作系统原理\wfs\allocate.h
+
+1401949762 h:\课程\操作系统原理\wfs\command.h
+	"print.h"
+	"directory.h"
+	"file.h"
+
+1401950064 h:\课程\操作系统原理\wfs\file.h
+
