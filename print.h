@@ -75,3 +75,14 @@ void printMenu() {
     printHelp("format", "", "Reset the file system, and you will lose data. DANGEROUS!");
     printHelp("debug", "[-i|-d] [index]", "Output the information of Inode or Block to help debug.");
 }
+
+void printOpenFile() {
+    list<int>::iterator it;
+    list<int> userOpenFiles = users[username].openFiles;
+
+    cout << "Open files: " << endl;
+    for (it = userOpenFiles.begin(); it != userOpenFiles.end(); it++) {
+        OpenFile o = openFiles[*it];
+        cout << *it << " " << o.flag << " " << o.count << " " << o.index << " " << o.offset << endl;
+    }
+}

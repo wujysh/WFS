@@ -33,7 +33,7 @@ struct User {
     int id;
     int gid;
     int role; // 0-normal user, 1-administrator
-    vector<int> openFiles;
+    list<int> openFiles;
     User() {}
     User(string _pwd, int _id, int _gid, int _role) : password(_pwd), id(_id), gid(_gid), role(_role) {}
 };
