@@ -53,7 +53,7 @@ void readIdleInode() {
 
 void writeIdleInode() {
     block.open("./disk/super/2.disk", ios::out);
-    for (int i = 0; i < idle_inode_stack.size(); i++) {
+    for (unsigned i = 0; i < idle_inode_stack.size(); i++) {
         if (i) block << ' ';
         block << idle_inode_stack[i];
     }
@@ -74,7 +74,7 @@ void readIdleBlock() {
 
 void writeIdleBlock() {
     block.open("./disk/super/3.disk", ios::out);
-    for (int i = 0; i < idle_block_stack.size(); i++) {
+    for (unsigned i = 0; i < idle_block_stack.size(); i++) {
         if (i) block << ' ';
         block << idle_block_stack[i];
     }

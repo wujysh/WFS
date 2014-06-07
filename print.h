@@ -43,7 +43,7 @@ void printDirectoryDetail(int index, bool showHide) {
 
 void printPath() {
     cout << endl;
-    for (int i = 1; i < path.size(); i++) {
+    for (unsigned i = 1; i < path.size(); i++) {
         cout << '/' << path[i].name;
     }
     cout << "> ";
