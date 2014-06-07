@@ -13,6 +13,11 @@
 #include "file.h"
 #endif // _FILE_H_
 
+#ifndef _MEMORY_H_
+#define _MEMORY_H_
+#include "memory.h"
+#endif // _MEMORY_H_
+
 vector<string> getOptions(int n) {
     string line, op;
     vector<string> ret;

@@ -3,6 +3,11 @@
 #include "base.h"
 #endif // _BASE_H_
 
+#ifndef _COMMON_H_
+#define _COMMON_H_
+#include "common.h"
+#endif // _COMMON_H_
+
 bool format() {
     formatted = true;
     writeSetting(formatted);
@@ -28,10 +33,10 @@ bool format() {
     inodes.clear();
     vector<int> addr(10, -1);
     addr[0] = 0;
-    inodes[0] = Inode("dr-xr-x--x", 0, 0, 4096, 1, addr, -1);  // root (MFD)
+    inodes[0] = Inode(0, "dr-xr-x--x", 0, 0, 4096, 1, addr, -1);  // root (MFD)
     for (int i = 1; i <= 3; i++) {
         addr[0] = i;
-        inodes[i] = Inode("drwx--x--x", i-1, i-1, 4096, 1, addr, -1);  // three default user (UFD)
+        inodes[i] = Inode(i, "drwx--x--x", i-1, i-1, 4096, 1, addr, -1);  // three default user (UFD)
     }
     addr[0] = -1;
     for (int i = 4; i < 5760; i++) {

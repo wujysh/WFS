@@ -18,7 +18,7 @@
 	<list>
 	<set>
 
-1402071378 source:c:\users\wujq\documents\github\wfs\main.cpp
+1402148717 source:c:\users\wujq\documents\github\wfs\main.cpp
 	"common.h"
 	"format.h"
 	"user.h"
@@ -26,37 +26,40 @@
 
 1401814765 "
 
-1402071378 c:\users\wujq\documents\github\wfs\common.h
+1402154229 c:\users\wujq\documents\github\wfs\common.h
 	<algorithm>
 	<iostream>
 	<fstream>
 	<sstream>
 	<iomanip>
-	<cstdlib>
 	<cstdio>
 	<string>
 	<vector>
+	<ctime>
 	<stack>
 	<list>
 	<set>
 	<map>
 
-1402071378 c:\users\wujq\documents\github\wfs\format.h
+1402153702 c:\users\wujq\documents\github\wfs\format.h
 	"base.h"
+	"common.h"
 
 1402071378 c:\users\wujq\documents\github\wfs\user.h
 	"base.h"
 	"directory.h"
 	<conio.h>
 
-1402071378 c:\users\wujq\documents\github\wfs\command.h
+1402154804 c:\users\wujq\documents\github\wfs\command.h
 	"print.h"
 	"directory.h"
 	"file.h"
+	"memory.h"
 
 1401528013 c:\users\wujq\documents\github\wfs\bash.h
 
-1402073972 c:\users\wujq\documents\github\wfs\base.h
+1402154994 c:\users\wujq\documents\github\wfs\base.h
+	"common.h"
 
 1402071378 c:\users\wujq\documents\github\wfs\print.h
 
@@ -181,11 +184,19 @@
 
 1401984977 /home/wujy/Documents/WFS/file.h
 
-1402071378 c:\users\wujq\documents\github\wfs\directory.h
+1402154504 c:\users\wujq\documents\github\wfs\directory.h
 	"print.h"
 	"allocate.h"
 
 1402071378 c:\users\wujq\documents\github\wfs\allocate.h
 
-1402071378 c:\users\wujq\documents\github\wfs\file.h
+1402154782 c:\users\wujq\documents\github\wfs\file.h
+
+1402148076 source:c:\users\wujq\documents\github\wfs\common.cpp
+	<cstdlib>
+
+1402149030 source:c:\users\wujq\documents\github\wfs\base.cpp
+	"common.h"
+
+1402154782 c:\users\wujq\documents\github\wfs\memory.h
 

@@ -3,10 +3,25 @@
  * Version 0.2.0
  * 2014.6.1
  */
+#ifndef _COMMON_H_
+#define _COMMON_H_
 #include "common.h"
+#endif // _COMMON_H_
+
+#ifndef _FORMAT_H_
+#define _FORMAT_H_
 #include "format.h"
+#endif // _FORMAT_H_
+
+#ifndef _USER_H_
+#define _USER_H_
 #include "user.h"
+#endif // _USER_H_
+
+#ifndef _COMMAND_H_
+#define _COMMAND_H_
 #include "command.h"
+#endif // _COMMAND_H_
 
 void initSystem() {
     cout << "Initializing ..." << endl;

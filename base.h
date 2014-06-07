@@ -1,3 +1,8 @@
+#ifndef _COMMON_H_
+#define _COMMON_H_
+#include "common.h"
+#endif // _COMMON_H_
+
 // Block 0#
 void readSetting(bool &formatted) {
     setting.open("./disk/super/0.disk", ios::in);
@@ -122,6 +127,7 @@ void readInodeOneBlock(int index) {
     for (int i = offset; i < offset+64; i++) {
         Inode inode;
         block >> inode.mode;
+        block >> inode.link_cnt;
         block >> inode.uid;
         block >> inode.gid;
         block >> inode.file_size;
@@ -144,6 +150,7 @@ void writeInodeOneBlock(Inode inode, int index) {
     for (int i = offset; i < offset+64; i++) {
         Inode node = inodes[i];
         block << node.mode << endl;
+        block << node.link_cnt << endl;
         block << node.uid << endl;
         block << node.gid << endl;
         block << node.file_size << endl;
@@ -156,7 +163,8 @@ void writeInodeOneBlock(Inode inode, int index) {
             block << node.addr[j];
         }
         block << endl;
-        block << node.addr1 << endl << endl;
+        block << node.addr1 << endl;
+        //block << endl;
     }
 
     block.close();
@@ -169,6 +177,7 @@ void writeInodeAll() {
     for (it = inodes.begin(); it != inodes.end(); it++) {
         Inode inode = it->second;
         block << inode.mode << endl;
+        block << inode.link_cnt << endl;
         block << inode.uid << endl;
         block << inode.gid << endl;
         block << inode.file_size << endl;
@@ -178,7 +187,8 @@ void writeInodeAll() {
             block << inode.addr[i];
         }
         block << endl;
-        block << inode.addr1 << endl << endl;
+        block << inode.addr1 << endl;
+        //block << endl;
 
         if (++cnt % 64 == 0 && cnt / 64 != 90) {
             // switch block

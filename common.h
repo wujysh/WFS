@@ -3,10 +3,10 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
-#include <cstdlib>
 #include <cstdio>
 #include <string>
 #include <vector>
+#include <ctime>
 #include <stack>
 #include <list>
 #include <set>
@@ -44,16 +44,30 @@ vector<int> idle_block_stack;
 
 // Global structures
 struct Inode {
-    string mode;  //[0]类型(d目录-文件)[1~3]owner权限[4~6]group权限[7~9]other权限 r(读)w(写)x(执行)
+    // only memory Inode
+    int flag;
+    int open_cnt;
+    int index;
+    // both memory and disk Inode
+    string mode;  // type (directory or file) and authority flag like "drwxrwxrwx"
+    int link_cnt;  // number of links
     int uid;  // user id
     int gid;  // group id
     int file_size;
     int block_cnt;
     vector<int> addr;  // direct
     int addr1;  // single indirect
-    Inode() : mode("----------"), uid(-1), gid(-1), file_size(0), block_cnt(0), addr(10, -1), addr1(-1) {}
-    Inode(string _mode, int _uid, int _gid, int _fs, int _bc, vector<int> _addr, int _addr1)
-    : mode(_mode), uid(_uid), gid(_gid), file_size(_fs), block_cnt(_bc), addr(_addr), addr1(_addr1) {}
+    //time_t access_time;
+    //time_t modify_time;
+    //time_t create_time;
+    Inode() : flag(0), open_cnt(0), index(-1), mode("----------"), link_cnt(0), uid(-1), gid(-1), file_size(0),
+        block_cnt(0), addr(10, -1), addr1(-1) {}
+    Inode(int _index, string _mode, int _uid, int _gid, int _fs, int _bc, vector<int> _addr, int _addr1/*, time_t _at, time_t _mt, time_t _ct*/) :
+        flag(0), open_cnt(0), index(_index), mode(_mode), link_cnt(1), uid(_uid), gid(_gid), file_size(_fs),
+        block_cnt(_bc), addr(_addr), addr1(_addr1)/*, access_time(_at), modify_time(_mt), create_time(_ct)*/ {}
+    Inode(int _index, string _mode, int _uid, int _gid, int _fs, int _bc/*, vector<int> _addr, int _addr1, time_t _at, time_t _mt, time_t _ct*/) :
+        flag(0), open_cnt(0), index(_index), mode(_mode), link_cnt(1), uid(_uid), gid(_gid), file_size(_fs),
+        block_cnt(_bc), addr(10, -1), addr1(-1)/*, access_time(_at), modify_time(_mt), create_time(_ct)*/ {}
 };
 map<int, Inode> inodes;
 
@@ -69,10 +83,4 @@ map<int, map<string, int> > directories;
 
 // Global functions
 
-void clearScreen(void) {
-#ifdef __linux__
-    system("clear");
-#else
-    system("cls");
-#endif
-}
+void clearScreen(void);

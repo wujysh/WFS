@@ -9,18 +9,13 @@ void mkfile(string name) {
     }
 
     int childIndex = allocateInode();
-    Inode childInode = inodes[childIndex];
-
-    childInode.mode = "-rwxr-xr-x";
-    childInode.uid = users[username].id;
-    childInode.gid = users[username].gid;
-    childInode.file_size = 0;
-    childInode.block_cnt = 1;
+    Inode childInode = Inode(childIndex, "-rwxr-xr-x", users[username].id, users[username].gid, 0, 1);
     childInode.addr[0] = allocateBlock();
+    inodes[childIndex] = childInode;
 
     directory[name] = childIndex;
     directories[index] = directory;
-    writeDirectory(childIndex);
+    //writeDirectory(childIndex);
     writeDirectory(index);
 
     inodes[childIndex] = childInode;
@@ -57,24 +52,7 @@ void rmfile(string name) {
 
     directory.erase(name);
     directories[index] = directory;
-    writeDirectory(childIndex);
+
     writeDirectory(index);
-
     writeInodeOneBlock(Inode(), childIndex);
-}
-
-void open(string name) {
-
-}
-
-void close(string name) {
-
-}
-
-void read(string name) {
-
-}
-
-void write(string name) {
-
 }

@@ -3,7 +3,10 @@
 #include "print.h"
 #endif // _PRINT_H_
 
+#ifndef _ALLOCATE_H_
+#define _ALLOCATE_H_
 #include "allocate.h"
+#endif // _ALLOCATE_H_
 
 void cd(string name) {
     if (name == ".") {
@@ -46,7 +49,7 @@ void ls(int type) {
 void mkdir(string name) {
     int index = path.back().inode;
     Inode inode = getInode(index);
-    map<string, int> directory = getDirectory(index);
+    map<string, int> directory = getDirectory(index), childDirectory;
 
     if (directory.find(name) != directory.end()) {
         cout << "mkdir: cannot create directory '" << name << "': File exists" << endl;
@@ -54,19 +57,19 @@ void mkdir(string name) {
     }
 
     int childIndex = allocateInode();
-    Inode childInode = inodes[childIndex];
-
-    childInode.mode = "drwxr-xr-x";
-    childInode.uid = users[username].id;
-    childInode.gid = users[username].gid;
-    childInode.file_size = 4096;
-    childInode.block_cnt = 1;
+    Inode childInode = Inode(childIndex, "drwxr-xr-x", users[username].id, users[username].gid, 4096, 1);
     childInode.addr[0] = allocateBlock();
+    inodes[childIndex] = childInode;
+
+    childDirectory["."] = childIndex;
+    childDirectory[".."] = index;
 
     directory[name] = childIndex;
+
     directories[index] = directory;
-    writeDirectory(childIndex);
+    directories[childIndex] = childDirectory;
     writeDirectory(index);
+    writeDirectory(childIndex);
 
     inodes[childIndex] = childInode;
     writeInodeOneBlock(childInode, childIndex);
