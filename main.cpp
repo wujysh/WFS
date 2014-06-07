@@ -1,7 +1,7 @@
 /**
  * Wujy File System (WFS)
- * Version 0.2.0
- * 2014.6.1
+ * Version 0.2.5
+ * Date 2014.6.8
  */
 #ifndef _COMMON_H_
 #define _COMMON_H_
@@ -55,14 +55,9 @@ int main() {
 
     if (formatted) {
         initSystem();
-
         switchUser();
-        /// printMenu();
-
         readCommand();
-
         saveSystem();
-
         cout << "Good bye!" << endl;
     }
 

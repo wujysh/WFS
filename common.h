@@ -19,6 +19,7 @@ fstream block, user, setting;
 bool formatted;
 string cur_dir;
 
+// Global structures
 struct Path {
     int inode;
     string name;
@@ -32,6 +33,7 @@ struct User {
     int id;
     int gid;
     int role; // 0-normal user, 1-administrator
+    vector<int> openFiles;
     User() {}
     User(string _pwd, int _id, int _gid, int _role) : password(_pwd), id(_id), gid(_gid), role(_role) {}
 };
@@ -42,7 +44,6 @@ string username;
 vector<int> idle_inode_stack;
 vector<int> idle_block_stack;
 
-// Global structures
 struct Inode {
     // only memory Inode
     int flag;
@@ -71,16 +72,17 @@ struct Inode {
 };
 map<int, Inode> inodes;
 
-struct Directory {
-    string name;
-    int inode;
-    Directory() {}
-    Directory(string _name, int _inode) : name(_name), inode(_inode) {}
-};
-//map<int, vector<Directory> > directories;  // Inode index => Directory structure
 map<int, map<string, int> > directories;
 
+struct OpenFile {
+    int flag;
+    int count;
+    int index;
+    int offset;
+    OpenFile() {}
+    OpenFile(int _flag, int _count, int _index, int _offset) : flag(_flag), count(_count), index(_index), offset(_offset) {}
+};
+vector<OpenFile> openFiles;
 
 // Global functions
-
 void clearScreen(void);
