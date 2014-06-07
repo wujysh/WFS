@@ -41,7 +41,7 @@
 #endif
 
 bool login() {
-    readUser();
+    //readUser();
     string name, pwd;
     cout << "Username: ";
     cin >> name;

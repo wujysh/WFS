@@ -40,6 +40,7 @@ void saveSystem() {
 
 int main() {
     readSetting(formatted);
+    readUser();
 
     if (!formatted) {
         cout << "The disk hasn't formatted. Please wait a second ..." << endl;

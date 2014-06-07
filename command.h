@@ -96,6 +96,8 @@ void readCommand() {
             options = getOptions(1);
             if (options.size() == 1) {
                 open(options[0]);
+            } else if (options.size() == 0) {
+                printOpenFile();
             } else {
                 printUsage(command, "[file]");
             }
