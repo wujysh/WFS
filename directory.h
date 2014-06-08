@@ -96,7 +96,7 @@ void rmdir(string name) {
 
     map<string, int> childDirectory = getDirectory(childIndex);
 
-    if (!childDirectory.empty()) {
+    if (childDirectory.size() > 2) {  // . and ..
         cout << "rmdir: failed to remove '" << name << "': Directory not empty" << endl;
         return;
     }
