@@ -77,14 +77,14 @@ void printMenu() {
 }
 
 void printOpenFile() {
-    list<int>::iterator it;
-    list<int> userOpenFiles = users[username].openFiles;
+    map<int, int>::iterator it;
+    map<int, int> userOpenFiles = users[username].openFiles;
 
     cout.flags(ios::right);
     cout << username << " open files: " << endl;
     cout << setw(15) << "descriptor" << setw(10) << "flag" << setw(10) << "count" << setw(10) << "inode" << setw(10) << "offset" << endl;
     for (it = userOpenFiles.begin(); it != userOpenFiles.end(); it++) {
-        OpenFile o = openFiles[*it];
-        cout << setw(15) << *it << setw(10) << o.flag << setw(10) << o.count << setw(10) << o.index << setw(10) << o.offset << endl;
+        OpenFile o = openFiles[it->second];
+        cout << setw(15) << it->first << setw(10) << o.flag << setw(10) << o.count << setw(10) << o.index << setw(10) << o.offset << endl;
     }
 }

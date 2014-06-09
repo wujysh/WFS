@@ -18,15 +18,23 @@ void open(string name) {
     }
 
     inode.open_cnt++;
-    //users[username].openFiles[openFiles.size()] = openFiles.size();
-    users[username].openFiles.push_back(openFiles.size());
+    users[username].openFiles[users[username].openFiles.size()] = openFiles.size();
+    //users[username].openFiles.push_back(openFiles.size());
     openFiles.push_back(OpenFile(0, 0, childIndex, 0));
 
     printOpenFile();
 }
 
 void close(int descriptor) {
+    if (users[username].openFiles.find(descriptor) == users[username].openFiles.end()) {
+        cout << "close: failed to close '"<< descriptor << "': No such open file" << endl;
+    }
 
+    openFiles[users[username].openFiles[descriptor]].flag = 1;
+    inodes[openFiles[users[username].openFiles[descriptor]].index].open_cnt--;
+    users[username].openFiles.erase(descriptor);
+
+    printOpenFile();
 }
 
 void read(string name) {
