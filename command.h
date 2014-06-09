@@ -104,9 +104,9 @@ void readCommand() {
         } else if (command == "close") {
             options = getOptions(1);
             if (options.size() == 1) {
-                close(options[0]);
+                close(atoi(options[0].c_str()));
             } else {
-                printUsage(command, "[file]");
+                printUsage(command, "[file descriptor]");
             }
         } else if (command == "read") {
             options = getOptions(1);

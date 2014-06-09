@@ -18,13 +18,14 @@ void open(string name) {
     }
 
     inode.open_cnt++;
+    //users[username].openFiles[openFiles.size()] = openFiles.size();
     users[username].openFiles.push_back(openFiles.size());
     openFiles.push_back(OpenFile(0, 0, childIndex, 0));
 
     printOpenFile();
 }
 
-void close(string name) {
+void close(int descriptor) {
 
 }
 

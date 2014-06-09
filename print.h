@@ -68,8 +68,8 @@ void printMenu() {
     printHelp("rmdir", "[dir]", "Remove the DIRECTORY, if it is empty.");
     printHelp("mk", "[file]", "Create the FILE, if it does not already exist.");
     printHelp("rm", "[file]", "Remove (unlink) the FILE.");  // TODO: link and unlink
-    printHelp("open", "[file]", "Open the FILE, if it exists.");
-    printHelp("close", "[file]", "Close the FILE, if it has already open.");
+    printHelp("open", "[file]", "Open the FILE, if it exists. And return the file descriptor.");
+    printHelp("close", "[file descriptor]", "Close the FILE, if it has already open.");
     printHelp("read", "[file]", "Read the FILE, and open it if hasn't.");
     printHelp("write", "[file]", "Write the FILE.");
     printHelp("format", "", "Reset the file system, and you will lose data. DANGEROUS!");
@@ -82,9 +82,9 @@ void printOpenFile() {
 
     cout.flags(ios::right);
     cout << username << " open files: " << endl;
-    cout << setw(10) << "open #" << setw(10) << "flag" << setw(10) << "count" << setw(10) << "inode" << setw(10) << "offset" << endl;
+    cout << setw(15) << "descriptor" << setw(10) << "flag" << setw(10) << "count" << setw(10) << "inode" << setw(10) << "offset" << endl;
     for (it = userOpenFiles.begin(); it != userOpenFiles.end(); it++) {
         OpenFile o = openFiles[*it];
-        cout << setw(10) << *it << setw(10) << o.flag << setw(10) << o.count << setw(10) << o.index << setw(10) << o.offset << endl;
+        cout << setw(15) << *it << setw(10) << o.flag << setw(10) << o.count << setw(10) << o.index << setw(10) << o.offset << endl;
     }
 }

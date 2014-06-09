@@ -1,7 +1,7 @@
 /**
  * Wujy File System (WFS)
- * Version 0.2.5
- * Date 2014.6.8
+ * Version 0.2.6
+ * Date 2014.6.9
  */
 #ifndef _COMMON_H_
 #define _COMMON_H_
