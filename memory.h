@@ -19,7 +19,6 @@ void open(string name) {
 
     inode.open_cnt++;
     users[username].openFiles[users[username].openFiles.size()] = openFiles.size();
-    //users[username].openFiles.push_back(openFiles.size());
     openFiles.push_back(OpenFile(0, 0, childIndex, 0));
 
     printOpenFile();
