@@ -8,11 +8,39 @@
 #include "allocate.h"
 #endif // _ALLOCATE_H_
 
+#ifndef _COMMON_H_
+#define _COMMON_H_
+#include "common.h"
+#endif // _COMMON_H_
+
+bool canRead(int index) {
+    Inode inode = getInode(index);
+    if (!((inode.mode[1] == 'r' && inode.uid == users[username].id) || (inode.mode[4] == 'r' && inode.gid == users[username].gid) || (inode.mode[7] == 'r'))) {
+        return false;
+    }
+    return true;
+}
+
+bool canWrite(int index) {
+    Inode inode = getInode(index);
+    if (!((inode.mode[2] == 'w' && inode.uid == users[username].id) || (inode.mode[5] == 'w' && inode.gid == users[username].gid) || (inode.mode[8] == 'w'))) {
+        return false;
+    }
+    return true;
+}
+
 void cd(string name) {
     if (name == ".") {
 
     } else if (name == "..") {
         if (path.size() > 1) {
+            int index = path[path.size()-2].inode;
+
+            if (!isAuthorized(index)) {
+                cout << "cd: " << name << ": No authority" << endl;
+                return;
+            }
+
             path.pop_back();
         }
     } else {
@@ -22,6 +50,11 @@ void cd(string name) {
 
         if (directory.find(name) == directory.end()) {
             cout << "cd: " << name << ": No such file or directory" << endl;
+            return;
+        }
+
+        if (!isAuthorized(directory[name])) {
+            cout << "cd: " << name << ": No authority" << endl;
             return;
         }
 
@@ -116,4 +149,25 @@ void rmdir(string name) {
     writeDirectory(index);
 
     writeInodeOneBlock(Inode(), childIndex);
+}
+
+void chmod(string name, string mode) {
+    int index = path.back().inode;
+    Inode inode = getInode(index);
+    map<string, int> directory = getDirectory(index);
+
+    if (directory.find(name) == directory.end()) {
+        cout << "chmod: " << name << ": No such file or directory" << endl;
+        return;
+    }
+
+    int childIndex = directory[name];
+    Inode childInode = inodes[childIndex];
+
+    // TODO: authority verify
+
+    childInode.mode = mode;
+
+    inodes[childIndex] = childInode;
+    writeInodeOneBlock(childInode, childIndex);
 }

@@ -122,6 +122,13 @@ void readCommand() {
             } else {
                 printUsage(command, "[file]");
             }
+        } else if (command == "chmod") {
+            options = getOptions(2);
+            if (options.size() == 2) {
+                chmod(options[0], options[1]);
+            } else {
+                printUsage(command, "[dir|file] [mode]");
+            }
         } else if (command == "login" || command == "logout") {
             switchUser();
         } else if (command == "menu" || command == "help" || command == "about") {

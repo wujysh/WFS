@@ -72,6 +72,7 @@ void printMenu() {
     printHelp("close", "[file descriptor]", "Close the FILE, if it has already open.");
     printHelp("read", "[file]", "Read the FILE, and open it if hasn't.");
     printHelp("write", "[file]", "Write the FILE.");
+    printHelp("chmod", "[dir|file] [mode]", "Change the mode of the FILE or DIRECTORY, like 'drwxrwxrwx'.");
     printHelp("format", "", "Reset the file system, and you will lose data. DANGEROUS!");
     printHelp("debug", "[-i|-d] [index]", "Output the information of Inode or Block to help debug.");
 }

@@ -61,7 +61,7 @@ struct Inode {
     //time_t access_time;
     //time_t modify_time;
     //time_t create_time;
-    Inode() : flag(0), open_cnt(0), index(-1), mode("----------"), link_cnt(0), uid(-1), gid(-1), file_size(0),
+    Inode() : flag(0), open_cnt(0), index(-1), mode("drwxr-x--x"), link_cnt(0), uid(-1), gid(-1), file_size(0),
         block_cnt(0), addr(10, -1), addr1(-1) {}
     Inode(int _index, string _mode, int _uid, int _gid, int _fs, int _bc, vector<int> _addr, int _addr1/*, time_t _at, time_t _mt, time_t _ct*/) :
         flag(0), open_cnt(0), index(_index), mode(_mode), link_cnt(1), uid(_uid), gid(_gid), file_size(_fs),
@@ -85,4 +85,10 @@ struct OpenFile {
 vector<OpenFile> openFiles;
 
 // Global functions
-void clearScreen(void);
+void clearScreen() {
+#ifdef __linux__
+    system("clear");
+#else
+    system("cls");
+#endif
+}

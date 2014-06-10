@@ -1,8 +1,3 @@
-#ifndef _COMMON_H_
-#define _COMMON_H_
-#include "common.h"
-#endif // _COMMON_H_
-
 // Block 0#
 void readSetting(bool &formatted) {
     setting.open("./disk/super/0.disk", ios::in);
