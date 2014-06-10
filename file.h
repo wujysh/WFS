@@ -1,6 +1,17 @@
+#ifndef _AUTHORITY_H_
+#define _AUTHORITY_H_
+#include "authority.h"
+#endif // _AUTHORITY_H_
+
 void mkfile(string name) {
     int index = path.back().inode;
     Inode inode = getInode(index);
+
+    if (!canWrite(index)) {
+        cout << "mk: " << name << ": No authority" << endl;
+        return;
+    }
+
     map<string, int> directory = getDirectory(index);
 
     if (directory.find(name) != directory.end()) {

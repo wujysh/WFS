@@ -48,14 +48,16 @@ void readCommand() {
                 } else if (options[0] == "-a") {
                     ls(3);
                 } else {
-                    printUsage(command, "[-a|-l|-al]");
+//                    ls(options[0], false);
                 }
-            } else {
+            } else if (options.size() == 0) {
                 if (command == "dir") {
                     ls(2);
                 } else if (command == "ls") {
                     ls(0);
                 }
+            } else {
+                printUsage(command, "[-a|-l|-al]");
             }
         } else if (command == "cd" || command == "chdir") {
             options = getOptions(1);

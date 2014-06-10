@@ -205,7 +205,7 @@
 	<set>
 	<map>
 
-1402375808 c:\users\jiaye\documents\github\wfs\format.h
+1402382829 c:\users\jiaye\documents\github\wfs\format.h
 	"base.h"
 	"common.h"
 
@@ -217,27 +217,37 @@
 	"common.h"
 	<conio.h>
 
-1402376557 c:\users\jiaye\documents\github\wfs\directory.h
+1402385141 c:\users\jiaye\documents\github\wfs\directory.h
 	"print.h"
 	"allocate.h"
 	"common.h"
+	"authority.h"
 
-1402374427 c:\users\jiaye\documents\github\wfs\print.h
+1402385122 c:\users\jiaye\documents\github\wfs\print.h
 
 1402372256 c:\users\jiaye\documents\github\wfs\allocate.h
 
-1402374397 c:\users\jiaye\documents\github\wfs\command.h
+1402385122 c:\users\jiaye\documents\github\wfs\command.h
 	"print.h"
 	"directory.h"
 	"file.h"
 	"memory.h"
 
-1402372256 c:\users\jiaye\documents\github\wfs\file.h
+1402383930 c:\users\jiaye\documents\github\wfs\file.h
+	"authority.h"
 
 1402372257 c:\users\jiaye\documents\github\wfs\memory.h
 
 1402375513 source:c:\users\jiaye\documents\github\wfs\common.cpp
 	<cstdlib>
+	"common.h"
+	"base.h"
+
+1402383122 source:c:\users\jiaye\documents\github\wfs\authority.cpp
+	"common.h"
+	"base.h"
+
+1402383930 c:\users\jiaye\documents\github\wfs\authority.h
 	"common.h"
 	"base.h"
 

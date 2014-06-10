@@ -13,9 +13,10 @@ bool format() {
     writeSetting(formatted);
 
     users.clear();
-    users["wujy"] = User("wujy", 0, 0, 1);
-    users["admin"] = User("admin", 1, 1, 1);
-    users["test"] = User("test", 2, 2, 0);
+    users["root"] = User("root", 0, 0, 1);
+    users["wujy"] = User("wujy", 1, 0, 1);
+    users["admin"] = User("admin", 2, 1, 1);
+    users["test"] = User("test", 3, 2, 0);
     writeUser();
 
     idle_inode_stack.clear();
@@ -36,7 +37,7 @@ bool format() {
     inodes[0] = Inode(0, "dr-xr-x--x", 0, 0, 4096, 1, addr, -1);  // root (MFD)
     for (int i = 1; i <= 3; i++) {
         addr[0] = i;
-        inodes[i] = Inode(i, "drwx--x--x", i-1, i-1, 4096, 1, addr, -1);  // three default user (UFD)
+        inodes[i] = Inode(i, "drwx--x--x", i, i-1, 4096, 1, addr, -1);  // three default user (UFD)
     }
     addr[0] = -1;
     for (int i = 4; i < 5760; i++) {

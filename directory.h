@@ -13,21 +13,10 @@
 #include "common.h"
 #endif // _COMMON_H_
 
-bool canRead(int index) {
-    Inode inode = getInode(index);
-    if (!((inode.mode[1] == 'r' && inode.uid == users[username].id) || (inode.mode[4] == 'r' && inode.gid == users[username].gid) || (inode.mode[7] == 'r'))) {
-        return false;
-    }
-    return true;
-}
-
-bool canWrite(int index) {
-    Inode inode = getInode(index);
-    if (!((inode.mode[2] == 'w' && inode.uid == users[username].id) || (inode.mode[5] == 'w' && inode.gid == users[username].gid) || (inode.mode[8] == 'w'))) {
-        return false;
-    }
-    return true;
-}
+#ifndef _AUTHORITY_H_
+#define _AUTHORITY_H_
+#include "authority.h"
+#endif // _AUTHORITY_H_
 
 void cd(string name) {
     if (name == ".") {
@@ -36,7 +25,7 @@ void cd(string name) {
         if (path.size() > 1) {
             int index = path[path.size()-2].inode;
 
-            if (!isAuthorized(index)) {
+            if (!canExecute(index)) {
                 cout << "cd: " << name << ": No authority" << endl;
                 return;
             }
@@ -53,7 +42,7 @@ void cd(string name) {
             return;
         }
 
-        if (!isAuthorized(directory[name])) {
+        if (!canExecute(directory[name])) {
             cout << "cd: " << name << ": No authority" << endl;
             return;
         }
@@ -68,20 +57,69 @@ void cd(string name) {
 }
 
 void ls(int type) {
-    if (type == 0) {  // ls (basic)
+    if (!canRead(path.back().inode)) {
+        cout << "ls: " << path.back().name << ": No authority" << endl;
+        return;
+    }
+
+    if (type == 0) {  // ls
         printDirectory(path.back().inode, false);
-    } else if (type == 1) {  // ls -l
-        printDirectoryDetail(path.back().inode, false);
-    } else if (type == 2) {  // ls -al
-        printDirectoryDetail(path.back().inode, true);
+        return;
     } else if (type == 3) {  // ls -a
         printDirectory(path.back().inode, true);
+        return;
+    }
+
+    if (!canExecute(path.back().inode)) {
+        cout << "ls: " << path.back().name << ": No authority" << endl;
+        return;
+    }
+
+    if (type == 1) {  // ls -l
+        printDirectoryDetail(path.back().inode, false);
+        return;
+    } else if (type == 2) {  // ls -al
+        printDirectoryDetail(path.back().inode, true);
+        return;
     }
 }
+
+//void ls(string name, bool showHide) {
+//    int index = path.back().inode;
+//    Inode inode = getInode(index);
+//    map<string, int> directory = getDirectory(index), childDirectory;
+//
+//    if (directory.find(name) == directory.end()) {
+//        cout << "ls: "<< name << ": No such file or directory" << endl;
+//        return;
+//    }
+//
+//    int childIndex = directory[name];
+//
+//    if (!canRead(childIndex)) {
+//        cout << "ls: " << name << ": No authority" << endl;
+//        return;
+//    }
+//
+//    Inode childInode = inodes[childIndex];
+//
+//    if (childInode.mode[0] != 'd') {
+//        cout << "ls: " << name << ": Not a directory" << endl;
+//        return;
+//    }
+//
+//    printDirectory(childIndex, false);
+//}
 
 void mkdir(string name) {
     int index = path.back().inode;
     Inode inode = getInode(index);
+
+    if (!canWrite(index)) {
+        cout << "mkdir: " << name << ": No authority" << endl;
+        return;
+    }
+
     map<string, int> directory = getDirectory(index), childDirectory;
 
     if (directory.find(name) != directory.end()) {
@@ -112,6 +150,12 @@ void mkdir(string name) {
 void rmdir(string name) {
     int index = path.back().inode;
     Inode inode = getInode(index);
+
+    if (!canWrite(index)) {
+        cout << "rmdir: " << name << ": No authority" << endl;
+        return;
+    }
+
     map<string, int> directory = getDirectory(index);
 
     if (directory.find(name) == directory.end()) {
@@ -120,6 +164,12 @@ void rmdir(string name) {
     }
 
     int childIndex = directory[name];
+
+    if (!canWrite(childIndex)) {
+        cout << "rmdir: " << name << ": No authority" << endl;
+        return;
+    }
+
     Inode childInode = inodes[childIndex];
 
     if (childInode.mode[0] != 'd') {
@@ -164,7 +214,10 @@ void chmod(string name, string mode) {
     int childIndex = directory[name];
     Inode childInode = inodes[childIndex];
 
-    // TODO: authority verify
+    if (!canWrite(childIndex)) {
+        cout << "chmod: " << name << ": No authority" << endl;
+        return;
+    }
 
     childInode.mode = mode;
 
