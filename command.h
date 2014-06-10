@@ -110,17 +110,17 @@ void readCommand() {
             } else {
                 printUsage(command, "[file descriptor]");
             }
-        } else if (command == "read") {
+        } else if (command == "read" || command == "cat") {
             options = getOptions(1);
             if (options.size() == 1) {
-                read(options[0]);
+                read(atoi(options[0].c_str()));
             } else {
                 printUsage(command, "[file]");
             }
         } else if (command == "write") {
             options = getOptions(1);
             if (options.size() == 1) {
-                write(options[0]);
+                write(atoi(options[0].c_str()));
             } else {
                 printUsage(command, "[file]");
             }

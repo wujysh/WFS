@@ -209,7 +209,7 @@
 	"base.h"
 	"common.h"
 
-1402376373 c:\users\jiaye\documents\github\wfs\base.h
+1402388583 c:\users\jiaye\documents\github\wfs\base.h
 
 1402375808 c:\users\jiaye\documents\github\wfs\user.h
 	"base.h"
@@ -227,7 +227,7 @@
 
 1402372256 c:\users\jiaye\documents\github\wfs\allocate.h
 
-1402385122 c:\users\jiaye\documents\github\wfs\command.h
+1402388053 c:\users\jiaye\documents\github\wfs\command.h
 	"print.h"
 	"directory.h"
 	"file.h"
@@ -236,7 +236,8 @@
 1402385499 c:\users\jiaye\documents\github\wfs\file.h
 	"authority.h"
 
-1402372257 c:\users\jiaye\documents\github\wfs\memory.h
+1402388583 c:\users\jiaye\documents\github\wfs\memory.h
+	"authority.h"
 
 1402375513 source:c:\users\jiaye\documents\github\wfs\common.cpp
 	<cstdlib>

@@ -1,3 +1,8 @@
+#ifndef _AUTHORITY_H_
+#define _AUTHORITY_H_
+#include "authority.h"
+#endif // _AUTHORITY_H_
+
 void open(string name) {
     // TODO: mode
     int index = path.back().inode;
@@ -11,6 +16,11 @@ void open(string name) {
 
     int childIndex = directory[name];
     Inode childInode = inodes[childIndex];
+
+    if (!canRead(childIndex)) {
+        cout << "open: filed to open '" << name << "': No authority" << endl;
+        return;
+    }
 
     if (childInode.mode[0] != '-') {
         cout << "open: failed to open '" << name << "': Not a file" << endl;
@@ -36,10 +46,33 @@ void close(int descriptor) {
     printOpenFile();
 }
 
-void read(string name) {
+void read(int descriptor) {
+    if (users[username].openFiles.find(descriptor) == users[username].openFiles.end()) {
+        cout << "read: failed to read '"<< descriptor << "': No such open file" << endl;
+        return;
+    }
 
+    string data;
+    OpenFile file = openFiles[users[username].openFiles[descriptor]];
+    readData(file.index, data);
+    openFiles[users[username].openFiles[descriptor]].offset = data.size();
+
+    cout << data << endl;
 }
 
-void write(string name) {
+void write(int descriptor) {
+    if (users[username].openFiles.find(descriptor) == users[username].openFiles.end()) {
+        cout << "write: failed to write '"<< descriptor << "': No such open file" << endl;
+        return;
+    }
 
+    cout << "Input the file content: (Press ':q' or 'exit' to save)" << endl;
+    string data, line;
+    while (getline(cin, line) && line != ":q" && line != "exit" && line != "quit") {
+        data += line + "\n";
+    }
+
+    OpenFile file = openFiles[users[username].openFiles[descriptor]];
+    writeData(file.index, data);
+    openFiles[users[username].openFiles[descriptor]].offset = data.size();
 }

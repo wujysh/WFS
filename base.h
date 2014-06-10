@@ -284,9 +284,8 @@ void readData(int index, string &data) {
     string line;
     data.clear();
     while (getline(block, line)) {
-        data += "\n" + line;
+        data += line + "\n";
     }
-    data += "\n";
 
     block.close();
 }
@@ -294,7 +293,7 @@ void readData(int index, string &data) {
 void writeData(int index, string &data) {
     block.open(getDataPath(index).c_str(), ios::out);
 
-    block << data << endl;
+    block << data;
 
     block.close();
 }
