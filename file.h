@@ -37,6 +37,12 @@ void mkfile(string name) {
 void rmfile(string name) {
     int index = path.back().inode;
     Inode inode = getInode(index);
+
+    if (!canWrite(index)) {
+        cout << "rm: " << name << ": No authority" << endl;
+        return;
+    }
+
     map<string, int> directory = getDirectory(index);
 
     if (directory.find(name) == directory.end()) {
@@ -46,6 +52,11 @@ void rmfile(string name) {
 
     int childIndex = directory[name];
     Inode childInode = inodes[childIndex];
+
+    if (!canWrite(childIndex)) {
+        cout << "rm: " << name << ": No authority" << endl;
+        return;
+    }
 
     if (childInode.mode[0] != '-') {
         cout << "rm: failed to remove '" << name << "': Not a file" << endl;

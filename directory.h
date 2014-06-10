@@ -164,13 +164,12 @@ void rmdir(string name) {
     }
 
     int childIndex = directory[name];
+    Inode childInode = inodes[childIndex];
 
     if (!canWrite(childIndex)) {
         cout << "rmdir: " << name << ": No authority" << endl;
         return;
     }
-
-    Inode childInode = inodes[childIndex];
 
     if (childInode.mode[0] != 'd') {
         cout << "rmdir: failed to remove '" << name << "': Not a directory" << endl;
