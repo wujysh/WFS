@@ -223,3 +223,32 @@ void chmod(string name, string mode) {
     inodes[childIndex] = childInode;
     writeInodeOneBlock(childInode, childIndex);
 }
+
+void rename(string name, string new_name) {
+    int index = path.back().inode;
+    Inode inode = getInode(index);
+    map<string, int> directory = getDirectory(index);
+
+    if (directory.find(name) == directory.end()) {
+        cout << "rename: " << name << ": No such file or directory" << endl;
+        return;
+    }
+
+    if (directory.find(new_name) != directory.end()) {
+        cout << "rename: " << new_name << ": File or directory exists" << endl;
+        return;
+    }
+
+    int childIndex = directory[name];
+
+    if (!canWrite(childIndex)) {
+        cout << "rename: " << name << ": No authority" << endl;
+        return;
+    }
+
+    directory[new_name] = directory[name];
+    directory.erase(name);
+
+    directories[index] = directory;
+    writeDirectory(index);
+}

@@ -94,6 +94,13 @@ void readCommand() {
             } else {
                 printUsage(command, "[file]");
             }
+        } else if (command == "rename" || command == "rn") {
+            options = getOptions(2);
+            if (options.size() == 2) {
+                rename(options[0], options[1]);
+            } else {
+                printUsage(command, "[dir|file] [new name]");
+            }
         } else if (command == "open") {
             options = getOptions(1);
             if (options.size() == 1) {
@@ -115,14 +122,14 @@ void readCommand() {
             if (options.size() == 1) {
                 read(atoi(options[0].c_str()));
             } else {
-                printUsage(command, "[file]");
+                printUsage(command, "[file descriptor]");
             }
         } else if (command == "write") {
             options = getOptions(1);
             if (options.size() == 1) {
                 write(atoi(options[0].c_str()));
             } else {
-                printUsage(command, "[file]");
+                printUsage(command, "[file descriptor]");
             }
         } else if (command == "chmod") {
             options = getOptions(2);
