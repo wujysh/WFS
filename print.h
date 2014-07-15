@@ -1,3 +1,6 @@
+#ifndef _PRINT_H
+#define _PRINT_H
+
 void printInode(int index) {
     Inode inode = getInode(index);
 
@@ -91,3 +94,5 @@ void printOpenFile() {
         cout << setw(15) << it->first << setw(10) << o.flag << setw(10) << o.count << setw(10) << o.index << setw(10) << o.offset << endl;
     }
 }
+
+#endif // _PRINT_H

@@ -1,3 +1,6 @@
+#ifndef _BASE_H
+#define _BASE_H
+
 // Block 0#
 void readSetting(bool &formatted) {
     setting.open("./disk/super/0.disk", ios::in);
@@ -297,3 +300,5 @@ void writeData(int index, string &data) {
 
     block.close();
 }
+
+#endif // _BASE_H

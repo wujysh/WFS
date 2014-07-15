@@ -1,7 +1,7 @@
-#ifndef _AUTHORITY_H_
-#define _AUTHORITY_H_
+#ifndef _FILE_H
+#define _FILE_H
+
 #include "authority.h"
-#endif // _AUTHORITY_H_
 
 void mkfile(string name) {
     int index = path.back().inode;
@@ -78,3 +78,5 @@ void rmfile(string name) {
     writeDirectory(index);
     writeInodeOneBlock(Inode(), childIndex);
 }
+
+#endif // _FILE_H

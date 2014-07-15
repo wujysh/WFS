@@ -1,17 +1,9 @@
-#ifndef _BASE_H_
-#define _BASE_H_
+#ifndef _USER_H
+#define _USER_H
+
 #include "base.h"
-#endif // _BASE_H_
-
-#ifndef _DIRECTORY_H_
-#define _DIRECTORY_H_
 #include "directory.h"
-#endif // _DIRECTORY_H_
-
-#ifndef _COMMON_H_
-#define _COMMON_H_
 #include "common.h"
-#endif // _COMMON_H_
 
 #ifdef __linux__
     void inputPassword(string &pwd) {
@@ -83,3 +75,5 @@ bool createUser() {
 bool deleteUser() {
     return true;
 }
+
+#endif // _USER_H

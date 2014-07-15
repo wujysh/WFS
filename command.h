@@ -1,22 +1,10 @@
-#ifndef _PRINT_H_
-#define _PRINT_H_
+#ifndef _COMMAND_H
+#define _COMMAND_H
+
 #include "print.h"
-#endif // _PRINT_H_
-
-#ifndef _DIRECTORY_H_
-#define _DIRECTORY_H_
 #include "directory.h"
-#endif // _DIRECTORY_H_
-
-#ifndef _FILE_H_
-#define _FILE_H_
 #include "file.h"
-#endif // _FILE_H_
-
-#ifndef _MEMORY_H_
-#define _MEMORY_H_
 #include "memory.h"
-#endif // _MEMORY_H_
 
 vector<string> getOptions(int n) {
     string line, op;
@@ -180,3 +168,5 @@ void readCommand() {
         }
     }
 }
+
+#endif // _COMMAND_H

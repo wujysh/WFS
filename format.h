@@ -1,12 +1,8 @@
-#ifndef _BASE_H_
-#define _BASE_H_
-#include "base.h"
-#endif // _BASE_H_
+#ifndef _FORMAT_H
+#define _FORMAT_H
 
-#ifndef _COMMON_H_
-#define _COMMON_H_
+#include "base.h"
 #include "common.h"
-#endif // _COMMON_H_
 
 bool format() {
     formatted = true;
@@ -63,3 +59,5 @@ bool format() {
 
     return true;
 }
+
+#endif // _FORMAT_H

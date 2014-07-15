@@ -1,22 +1,10 @@
-#ifndef _PRINT_H_
-#define _PRINT_H_
+#ifndef _DIRECTORY_H
+#define _DIRECTORY_H
+
 #include "print.h"
-#endif // _PRINT_H_
-
-#ifndef _ALLOCATE_H_
-#define _ALLOCATE_H_
 #include "allocate.h"
-#endif // _ALLOCATE_H_
-
-#ifndef _COMMON_H_
-#define _COMMON_H_
 #include "common.h"
-#endif // _COMMON_H_
-
-#ifndef _AUTHORITY_H_
-#define _AUTHORITY_H_
 #include "authority.h"
-#endif // _AUTHORITY_H_
 
 void cd(string name) {
     if (name == ".") {
@@ -252,3 +240,5 @@ void rename(string name, string new_name) {
     directories[index] = directory;
     writeDirectory(index);
 }
+
+#endif // _DIRECTORY_H

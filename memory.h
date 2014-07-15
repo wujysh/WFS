@@ -1,7 +1,7 @@
-#ifndef _AUTHORITY_H_
-#define _AUTHORITY_H_
+#ifndef _MEMORY_H
+#define _MEMORY_H
+
 #include "authority.h"
-#endif // _AUTHORITY_H_
 
 void open(string name) {
     // TODO: mode
@@ -76,3 +76,5 @@ void write(int descriptor) {
     writeData(file.index, data);
     openFiles[users[username].openFiles[descriptor]].offset = data.size();
 }
+
+#endif // _MEMORY_H

@@ -1,12 +1,8 @@
-#ifndef _COMMON_H_
-#define _COMMON_H_
-#include "common.h"
-#endif // _COMMON_H_
+#ifndef _AUTHORITY_H
+#define _AUTHORITY_H
 
-#ifndef _BASE_H_
-#define _BASE_H_
+#include "common.h"
 #include "base.h"
-#endif // _BASE_H_
 
 bool canRead(int index) {
     if (username == "root") return true;
@@ -37,3 +33,5 @@ bool canExecute(int index) {
     }
     return true;
 }
+
+#endif // _AUTHORITY_H

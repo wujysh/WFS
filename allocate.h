@@ -1,3 +1,6 @@
+#ifndef _ALLOCATE_H
+#define _ALLOCATE_H
+
 int allocateInode() {
     int index = -1;
     if (idle_inode_stack.size()) {
@@ -36,3 +39,5 @@ void releaseBlock(int block_index) {
     }
     //writeIdleBlock();
 }
+
+#endif // _ALLOCATE_H
