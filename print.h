@@ -17,6 +17,13 @@ void printInode(int index) {
     cout << inode.addr1 << endl;
 }
 
+void printIdleBlockStack() {
+    for (unsigned i = 0; i < idle_block_stack.size(); i++) {
+        cout << idle_block_stack[i] << " ";
+    }
+    cout << endl;
+}
+
 void printDirectory(int index, bool showHide) {
     map<string, int> directory = getDirectory(index);
     map<string, int>::iterator it;

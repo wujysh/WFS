@@ -22,11 +22,13 @@ void mkfile(string name) {
     int childIndex = allocateInode();
     Inode childInode = Inode(childIndex, "-rwxr-xr-x", users[username].id, users[username].gid, 0, 1);
     childInode.addr[0] = allocateBlock();
+    if (childInode.addr[0] == -1) return;
     inodes[childIndex] = childInode;
 
     directory[name] = childIndex;
     directories[index] = directory;
-    //writeDirectory(childIndex);
+    string data = "";
+    writeData(childIndex, data);
     writeDirectory(index);
 
     inodes[childIndex] = childInode;

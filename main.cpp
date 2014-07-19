@@ -1,7 +1,7 @@
 /**
  * Wujy File System (WFS)
- * Version 0.2.8
- * Date 2014.6.12
+ * Version 0.3
+ * Date 2014.7.19
  */
 
 #include "common.h"
@@ -12,20 +12,21 @@
 void initSystem() {
     cout << "Initializing ..." << endl;
     readIdleInode();
-    readIdleBlock();
+    popIdleBlockList();
     clearScreen();
 }
 
 void saveSystem() {
     cout << "Saving changes ..." << endl;
     writeIdleInode();
-    writeIdleBlock();
+    pushIdleBlockList();
+    writeSetting();
     //writeInodeAll();
     clearScreen();
 }
 
 int main() {
-    readSetting(formatted);
+    readSetting();
     readUser();
 
     if (!formatted) {

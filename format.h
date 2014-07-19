@@ -6,7 +6,8 @@
 
 bool format() {
     formatted = true;
-    writeSetting(formatted);
+    idle_block_list_index = 0;
+    writeSetting();
 
     users.clear();
     users["root"] = User("root", 0, 0, 1);
@@ -21,11 +22,16 @@ bool format() {
     }
     writeIdleInode();
 
-    idle_block_stack.clear();
-    for (int i = 49; i > 3; i--) {
-        idle_block_stack.push_back(i);
+    idle_block_list_index = 7;
+    int i = 924;
+    while (i > 4) {
+        idle_block_stack.clear();
+        for (int j = 0; j < 132; j++) {
+            idle_block_stack.push_back(--i);
+            if (i <= 4) break;
+        }
+        pushIdleBlockList();  // idle_block_list_index--;
     }
-    writeIdleBlock();
 
     inodes.clear();
     vector<int> addr(10, -1);

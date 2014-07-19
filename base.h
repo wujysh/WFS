@@ -1,16 +1,20 @@
 #ifndef _BASE_H
 #define _BASE_H
 
+#include "common.h"
+
 // Block 0#
-void readSetting(bool &formatted) {
+void readSetting() {
     setting.open("./disk/super/0.disk", ios::in);
     setting >> formatted;
+    setting >> idle_block_list_index;
     setting.close();
 }
 
-void writeSetting(bool &formatted) {
+void writeSetting() {
     setting.open("./disk/super/0.disk", ios::out);
     setting << formatted << endl;
+    setting << idle_block_list_index << endl;
     setting.close();
 }
 
@@ -59,9 +63,19 @@ void writeIdleInode() {
     block.close();
 }
 
-// Block 3#
-void readIdleBlock() {
-    block.open("./disk/super/3.disk", ios::in);
+// Block 3# ~ 9#
+string getIdleBlockPath(int index) {
+    int blockNum = index + 3;
+    stringstream ss;
+    ss << blockNum;
+    string blockNumStr;
+    ss >> blockNumStr;
+    string blockPath = "./disk/super/" + blockNumStr + ".disk";
+    return blockPath;
+}
+
+void readIdleBlock(int index) {
+    block.open(getIdleBlockPath(index).c_str(), ios::in);
     idle_block_stack.clear();
     int x;
     while (block >> x) {
@@ -70,14 +84,27 @@ void readIdleBlock() {
     block.close();
 }
 
-void writeIdleBlock() {
-    block.open("./disk/super/3.disk", ios::out);
+void writeIdleBlock(int index) {
+    block.open(getIdleBlockPath(index).c_str(), ios::out);
     for (unsigned i = 0; i < idle_block_stack.size(); i++) {
         if (i) block << ' ';
         block << idle_block_stack[i];
     }
     block << endl;
     block.close();
+}
+
+void popIdleBlockList() {
+    if (idle_block_list_index) {
+        writeIdleBlock(idle_block_list_index - 1);
+    }
+    readIdleBlock(idle_block_list_index);
+    idle_block_list_index++;
+}
+
+void pushIdleBlockList() {
+    idle_block_list_index--;
+    writeIdleBlock(idle_block_list_index);
 }
 
 // Block 10# ~ 19#
@@ -281,24 +308,65 @@ map<string, int> getDirectory(int index) {
     return directories[index];
 }
 
-void readData(int index, string &data) {
-    block.open(getDataPath(index).c_str(), ios::in);
+void readData(int index, int block_index, string &data) {
+    block.open(getDataPath(block_index).c_str(), ios::in);
 
     string line;
     data.clear();
+    int cnt = 0;
     while (getline(block, line)) {
-        data += line + "\n";
+        if (cnt++) data += '\n';
+        data += line;
+    }
+
+    block.close();
+}
+
+void readData(int index, string &data) {
+    Inode inode = getInode(index);
+
+    if (inode.mode[0] != '-') {
+        return;  // not file
+    }
+
+    for (int i = 0; i < inode.block_cnt; i++) {
+        if (i < 10) {
+            string part_data;
+            readData(index, inode.addr[i], part_data);
+            data += part_data;
+        } else {
+            // TODO: indirect
+        }
+    }
+}
+
+void writeData(int index, int block_index, string &data, string::iterator &it) {
+    block.open(getDataPath(block_index).c_str(), ios::out);
+
+    int cnt = 0;
+    for ( ; cnt < 20 && it != data.end(); it++, cnt++) {
+        block << *it;
     }
 
     block.close();
 }
 
 void writeData(int index, string &data) {
-    block.open(getDataPath(index).c_str(), ios::out);
+    Inode inode = getInode(index);
 
-    block << data;
+    if (inode.mode[0] != '-') {
+        return;  // not file
+    }
 
-    block.close();
+    string::iterator it = data.begin();
+
+    for (int i = 0; i < inode.block_cnt; i++) {
+        if (i < 10) {
+            writeData(index, inode.addr[i], data, it);
+        } else {
+            // TODO: indirect
+        }
+    }
 }
 
 #endif // _BASE_H

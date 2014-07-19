@@ -68,7 +68,7 @@ void readCommand() {
             } else {
                 printUsage(command, "[dir]");
             }
-        } else if (command == "create" || command == "mk" || command == "touch") {
+        } else if (command == "create" || command == "mk" || command == "touch" || command == "make") {
             options = getOptions(1);
             if (options.size() == 1) {
                 mkfile(options[0]);
@@ -140,7 +140,7 @@ void readCommand() {
                 format();
                 cout << "Initializing ..." << endl;
                 readIdleInode();
-                readIdleBlock();
+                popIdleBlockList();
                 clearScreen();
                 cout << "Formatted successfully." << endl;
                 switchUser();

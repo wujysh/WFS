@@ -46,6 +46,7 @@ string username;
 
 vector<int> idle_inode_stack;
 vector<int> idle_block_stack;
+int idle_block_list_index;
 
 struct Inode {
     // only memory Inode

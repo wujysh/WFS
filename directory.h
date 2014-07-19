@@ -118,6 +118,7 @@ void mkdir(string name) {
     int childIndex = allocateInode();
     Inode childInode = Inode(childIndex, "drwxr-xr-x", users[username].id, users[username].gid, 4096, 1);
     childInode.addr[0] = allocateBlock();
+    if (childInode.addr[0] == -1) return;
     inodes[childIndex] = childInode;
 
     childDirectory["."] = childIndex;

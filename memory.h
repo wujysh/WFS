@@ -15,10 +15,10 @@ void open(string name) {
     }
 
     int childIndex = directory[name];
-    Inode childInode = inodes[childIndex];
+    Inode childInode = getInode(childIndex);
 
     if (!canRead(childIndex)) {
-        cout << "open: filed to open '" << name << "': No authority" << endl;
+        cout << "open: failed to open '" << name << "': No authority" << endl;
         return;
     }
 
@@ -75,6 +75,7 @@ void write(int descriptor) {
     OpenFile file = openFiles[users[username].openFiles[descriptor]];
     writeData(file.index, data);
     openFiles[users[username].openFiles[descriptor]].offset = data.size();
+    inodes[file.index].file_size = data.size();
 }
 
 #endif // _MEMORY_H
