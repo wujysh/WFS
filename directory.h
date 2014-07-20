@@ -172,21 +172,12 @@ void rmdir(string name) {
         return;
     }
 
-    for (int i = 0; i < childInode.block_cnt; i++) {
-        if (i < 10) {
-            releaseBlock(childInode.addr[i]);
-        } else {
-            // Indirect
-        }
-    }
-    releaseInode(childIndex);
+    release(childInode);
 
     directory.erase(name);
     directories[index] = directory;
     writeDirectory(childIndex);
     writeDirectory(index);
-
-    writeInodeOneBlock(Inode(), childIndex);
 }
 
 void chmod(string name, string mode) {

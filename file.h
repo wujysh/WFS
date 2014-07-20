@@ -65,20 +65,11 @@ void rmfile(string name) {
         return;
     }
 
-    for (int i = 0; i < childInode.block_cnt; i++) {
-        if (i < 10) {
-            releaseBlock(childInode.addr[i]);
-        } else {
-            // Indirect
-        }
-    }
-    releaseInode(childIndex);
+    release(childInode);
 
     directory.erase(name);
     directories[index] = directory;
-
     writeDirectory(index);
-    writeInodeOneBlock(Inode(), childIndex);
 }
 
 #endif // _FILE_H

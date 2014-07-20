@@ -34,6 +34,17 @@ int allocateBlock() {
     return block_index;
 }
 
+vector<int> allocateBlock(int n) {
+    vector<int> blocks;
+    for (int i = 0; i < n; i++) {
+        int block_index = allocateBlock();
+        if (block_index == -1) break;
+        blocks.push_back(block_index);
+    }
+    //printIdleBlockStack();
+    return blocks;
+}
+
 void releaseInode(int index) {
     idle_inode_stack.push_back(index);
     inodes.erase(index);
@@ -48,6 +59,28 @@ void releaseBlock(int block_index) {
     }
     idle_block_stack.push_back(block_index);
     //printIdleBlockStack();
+}
+
+void releaseBlock(vector<int> &blocks) {
+    sort(blocks.begin(), blocks.end());
+    for (int i = blocks.size()-1; i >= 0; i--) {
+        releaseBlock(blocks[i]);
+    }
+    //printIdleBlockStack();
+}
+
+void release(Inode &inode) {
+    vector<int> blocks;
+    for (int i = 0; i < inode.block_cnt; i++) {
+        if (i < 10) {
+            blocks.push_back(inode.addr[i]);
+        } else {
+            // Indirect
+        }
+    }
+    releaseBlock(blocks);
+    releaseInode(inode.index);
+    writeInodeOneBlock(Inode(), inode.index);
 }
 
 #endif // _ALLOCATE_H
