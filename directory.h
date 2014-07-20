@@ -2,7 +2,6 @@
 #define _DIRECTORY_H
 
 #include "print.h"
-#include "allocate.h"
 #include "common.h"
 #include "authority.h"
 
@@ -130,10 +129,6 @@ void mkdir(string name) {
     directories[childIndex] = childDirectory;
     writeDirectory(index);
     writeDirectory(childIndex);
-
-    inodes[childIndex] = childInode;
-    writeInodeOneBlock(childInode, childIndex);
-    writeInodeOneBlock(inode, index);
 }
 
 void rmdir(string name) {
@@ -200,7 +195,6 @@ void chmod(string name, string mode) {
 
     childInode.mode = mode;
 
-    inodes[childIndex] = childInode;
     writeInodeOneBlock(childInode, childIndex);
 }
 

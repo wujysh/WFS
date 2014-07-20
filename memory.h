@@ -73,9 +73,9 @@ void write(int descriptor) {
     }
 
     OpenFile file = openFiles[users[username].openFiles[descriptor]];
+    inodes[file.index].file_size = data.size();
     writeData(file.index, data);
     openFiles[users[username].openFiles[descriptor]].offset = data.size();
-    inodes[file.index].file_size = data.size();
 }
 
 #endif // _MEMORY_H

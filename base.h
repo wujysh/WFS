@@ -231,6 +231,117 @@ Inode getInode(int index) {
     return inodes[index];
 }
 
+int allocateInode() {
+    int index = -1;
+    if (!idle_inode_stack.empty()) {
+        index = idle_inode_stack.back();
+        idle_inode_stack.pop_back();
+    } else {
+        cout << "WFS: FATAL ERROR: no available Inode" << endl;
+    }
+    writeIdleInode();
+    return index;
+}
+
+int allocateBlock() {
+    int block_index = -1;
+    if (!idle_block_stack.empty()) {
+        block_index = idle_block_stack.back();
+        idle_block_stack.pop_back();
+    } else {
+        // grouped chain
+        if (idle_block_list_index < 7) {
+            popIdleBlockList();
+            block_index = idle_block_stack.back();
+            idle_block_stack.pop_back();
+        } else {
+            cout << "WFS: FATAL ERROR: no available block" << endl;
+        }
+    }
+    //printIdleBlockStack();
+    return block_index;
+}
+
+vector<int> allocateBlock(int n) {
+    vector<int> blocks;
+    for (int i = 0; i < n; i++) {
+        int block_index = allocateBlock();
+        if (block_index == -1) break;
+        blocks.push_back(block_index);
+    }
+    //printIdleBlockStack();
+    return blocks;
+}
+
+void releaseInode(int index) {
+    idle_inode_stack.push_back(index);
+    inodes.erase(index);
+    writeIdleInode();
+}
+
+void releaseBlock(int block_index) {
+    if (idle_block_stack.size() >= 132) {
+        // grouped chain
+        pushIdleBlockList();
+        idle_block_stack.clear();
+    }
+    idle_block_stack.push_back(block_index);
+    //printIdleBlockStack();
+}
+
+void releaseBlock(vector<int> &blocks) {
+    sort(blocks.begin(), blocks.end());
+    for (int i = blocks.size()-1; i >= 0; i--) {
+        releaseBlock(blocks[i]);
+    }
+    //printIdleBlockStack();
+}
+
+void release(Inode &inode) {
+    vector<int> blocks;
+    for (int i = 0; i < inode.block_cnt; i++) {
+        if (i < 10) {
+            blocks.push_back(inode.addr[i]);
+        } else {
+            // Indirect
+        }
+    }
+    releaseBlock(blocks);
+    releaseInode(inode.index);
+    writeInodeOneBlock(Inode(), inode.index);
+}
+
+void rebuildInode(Inode &inode, int block_cnt) {
+    cout << inode.block_cnt << " " << block_cnt << " ";  // debug
+    if (block_cnt == inode.block_cnt) return;
+    if (block_cnt > inode.block_cnt) {
+        unsigned num = block_cnt - inode.block_cnt;
+        cout << num << endl;  // debug
+        vector<int> blocks = allocateBlock(num);
+        if (blocks.size() != num) return;
+        for (unsigned i = inode.block_cnt, j = 0; i < block_cnt && j < blocks.size(); i++, j++) {
+            if (i < 10) {
+                inode.addr[i] = blocks[j];
+            } else {
+                // Indirect
+            }
+        }
+    } else if (block_cnt < inode.block_cnt) {
+        vector<int> blocks;
+        for (int i = block_cnt; i < inode.block_cnt; i++) {
+            if (i < 10) {
+                blocks.push_back(inode.addr[i]);
+                inode.addr[i] = -1;
+            } else {
+                // Indirect
+            }
+        }
+        releaseBlock(blocks);
+    }
+    inode.block_cnt = block_cnt;
+    writeInodeOneBlock(inode, inode.index);
+}
+
 // Block 100# ~ 1023#
 string getDataPath(int index) {
     int blockNum = index + 100;
@@ -276,7 +387,7 @@ void writeDirectory(int index, int block_index, map<string, int>::iterator &it) 
     block.open(getDataPath(block_index).c_str(), ios::out);
 
     int cnt = 0;
-    for ( ; cnt < 100 && it != directories[index].end(); it++, cnt++) {
+    for ( ; cnt < 10 && it != directories[index].end(); it++, cnt++) {
         block << it->first << " " << it->second << endl;
     }
 
@@ -288,6 +399,12 @@ void writeDirectory(int index) {
 
     if (inode.mode[0] != 'd') {
         return;  // not directory
+    }
+
+    rebuildInode(inode, (directories[index].size()+9) / 10);
+    for (int i = 0; i < 10; i++) {  //debug
+        if (i) cout << " ";
+        cout << inode.addr[i];
     }
 
     map<string, int>::iterator it = directories[index].begin();
@@ -356,6 +473,12 @@ void writeData(int index, string &data) {
 
     if (inode.mode[0] != '-') {
         return;  // not file
+    }
+
+    rebuildInode(inode, (data.size()+19) / 20);
+    for (int i = 0; i < 10; i++) {  //debug
+        if (i) cout << " ";
+        cout << inode.addr[i];
     }
 
     string::iterator it = data.begin();

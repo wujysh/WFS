@@ -30,10 +30,6 @@ void mkfile(string name) {
     string data = "";
     writeData(childIndex, data);
     writeDirectory(index);
-
-    inodes[childIndex] = childInode;
-    writeInodeOneBlock(childInode, childIndex);
-    writeInodeOneBlock(inode, index);
 }
 
 void rmfile(string name) {
