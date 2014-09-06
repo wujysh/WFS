@@ -4,6 +4,55 @@
 #include "common.h"
 
 // Block 0#
+void readSetting();
+void writeSetting();
+
+// Block 1#
+void readUser();
+void writeUser();
+
+// Block 2#
+void readIdleInode();
+void writeIdleInode();
+
+// Block 3# ~ 9#
+string getIdleBlockPath(int);
+void readIdleBlock(int);
+void writeIdleBlock(int);
+void popIdleBlockList();
+void pushIdleBlockList();
+
+// Block 10# ~ 19#
+string getInodePath(int);
+void readInodeOneBlock(int);
+void writeInodeOneBlock(Inode, int);
+void writeInodeAll();
+Inode getInode(int);
+int allocateInode();
+int allocateBlock();
+vector<int> allocateBlock(int);
+void releaseInode(int);
+void releaseBlock(int);
+void releaseBlock(vector<int> &);
+void release(Inode &);
+void rebuildInode(Inode &, int);
+
+// Block 100# ~ 1023#
+string getDataPath(int);
+void readIndirectBlock(int, vector<int> &);
+void writeIndirectBlock(int, vector<int> &);
+void readDirectory(int, int);
+void readDirectory(int);
+void writeDirectory(int, int, map<string, int>::iterator &);
+void writeDirectory(int);
+map<string, int> getDirectory(int);
+void readData(int, int, string &);
+void readData(int, string &);
+void writeData(int, int, string &, string::iterator &);
+void writeData(int, string &);
+
+
+// Block 0#
 void readSetting() {
     setting.open("./disk/super/0.disk", ios::in);
     setting >> formatted;
@@ -118,33 +167,6 @@ string getInodePath(int index) {
     return blockPath;
 }
 
-//void readInode(int index) {
-//    block.open(getInodePath(index).c_str(), ios::in);
-//
-//    // block.seekg();
-//    int offset = index % 64;
-//    for (int i = 0; i < offset; i++) {
-//        for (int j = 0; j < 8; j++) {
-//            string line;
-//            getline(block, line);
-//        }
-//    }
-//
-//    Inode inode;
-//    block >> inode.mode;
-//    block >> inode.uid;
-//    block >> inode.gid;
-//    block >> inode.file_size;
-//    block >> inode.block_cnt;
-//    for (int i = 0; i < 10; i++) {
-//        block >> inode.addr[i];
-//    }
-//    block >> inode.addr1;
-//    inodes[index] = inode;
-//
-//    block.close();
-//}
-
 void readInodeOneBlock(int index) {
     block.open(getInodePath(index).c_str(), ios::in);
 
@@ -171,6 +193,7 @@ void writeInodeOneBlock(Inode inode, int index) {
     block.open(getInodePath(index).c_str(), ios::out);
 
     inodes[index] = inode;
+
     int offset = index / 64 * 64;
     for (int i = offset; i < offset+64; i++) {
         Inode node = inodes[i];
@@ -304,6 +327,12 @@ void release(Inode &inode) {
             blocks.push_back(inode.addr[i]);
         } else {
             // Indirect
+            if (inode.addr1 == -1) break;
+            vector<int> indirect_blocks;
+            readIndirectBlock(inode.addr1, indirect_blocks);
+            blocks.insert(blocks.end(), indirect_blocks.begin(), indirect_blocks.end());
+            blocks.push_back(inode.addr1);
+            break;
         }
     }
     releaseBlock(blocks);
@@ -312,18 +341,27 @@ void release(Inode &inode) {
 }
 
 void rebuildInode(Inode &inode, int block_cnt) {
-    cout << inode.block_cnt << " " << block_cnt << " ";  // debug
+    //cout << inode.block_cnt << " " << block_cnt << " ";  // debug
     if (block_cnt == inode.block_cnt) return;
     if (block_cnt > inode.block_cnt) {
         unsigned num = block_cnt - inode.block_cnt;
-        cout << num << endl;  // debug
+        //cout << num << endl;  // debug
         vector<int> blocks = allocateBlock(num);
         if (blocks.size() != num) return;
-        for (unsigned i = inode.block_cnt, j = 0; i < block_cnt && j < blocks.size(); i++, j++) {
+        for (unsigned i = inode.block_cnt, j = 0; i < (unsigned)block_cnt && j < blocks.size(); i++, j++) {
             if (i < 10) {
                 inode.addr[i] = blocks[j];
             } else {
                 // Indirect
+                vector<int> indirect_blocks;
+                if (inode.addr1 == -1) {
+                    inode.addr1 = allocateBlock();
+                } else {
+                    readIndirectBlock(inode.addr1, indirect_blocks);
+                }
+                indirect_blocks.insert(indirect_blocks.end(), blocks.begin()+j, blocks.end());
+                writeIndirectBlock(inode.addr1, indirect_blocks);
+                break;
             }
         }
     } else if (block_cnt < inode.block_cnt) {
@@ -334,6 +372,16 @@ void rebuildInode(Inode &inode, int block_cnt) {
                 inode.addr[i] = -1;
             } else {
                 // Indirect
+                vector<int> indirect_blocks;
+                readIndirectBlock(inode.addr1, indirect_blocks);
+                blocks.insert(blocks.end(), indirect_blocks.begin()+i-10, indirect_blocks.end());
+                indirect_blocks.erase(indirect_blocks.begin()+i-10, indirect_blocks.end());
+                if (indirect_blocks.empty()) {
+                    blocks.push_back(inode.addr1);
+                    inode.addr1 = -1;
+                }
+                writeIndirectBlock(inode.addr1, indirect_blocks);
+                break;
             }
         }
         releaseBlock(blocks);
@@ -351,6 +399,28 @@ string getDataPath(int index) {
     ss >> blockNumStr;
     string blockPath = "./disk/data/" + blockNumStr + ".disk";
     return blockPath;
+}
+
+void readIndirectBlock(int block_index, vector<int> &blocks) {
+    block.open(getDataPath(block_index).c_str(), ios::in);
+
+    blocks.clear();
+    int index;
+    while (block >> index) {
+        blocks.push_back(index);
+    }
+
+    block.close();
+}
+
+void writeIndirectBlock(int block_index, vector<int> &blocks) {
+    block.open(getDataPath(block_index).c_str(), ios::out);
+
+    for (unsigned i = 0; i < blocks.size(); i++) {
+        block << blocks[i] << endl;
+    }
+
+    block.close();
 }
 
 void readDirectory(int index, int block_index) {
@@ -378,7 +448,13 @@ void readDirectory(int index) {
         if (i < 10) {
             readDirectory(index, inode.addr[i]);
         } else {
-            // TODO: indirect
+            // Indirect
+            vector<int> indirect_blocks;
+            readIndirectBlock(inode.addr1, indirect_blocks);
+            for (unsigned j = 0; j < indirect_blocks.size(); j++) {
+                readDirectory(index, indirect_blocks[j]);
+            }
+            break;
         }
     }
 }
@@ -402,10 +478,6 @@ void writeDirectory(int index) {
     }
 
     rebuildInode(inode, (directories[index].size()+9) / 10);
-    for (int i = 0; i < 10; i++) {  //debug
-        if (i) cout << " ";
-        cout << inode.addr[i];
-    }
 
     map<string, int>::iterator it = directories[index].begin();
 
@@ -413,7 +485,13 @@ void writeDirectory(int index) {
         if (i < 10) {
             writeDirectory(index, inode.addr[i], it);
         } else {
-            // TODO: indirect
+            // Indirect
+            vector<int> indirect_blocks;
+            readIndirectBlock(inode.addr1, indirect_blocks);
+            for (unsigned j = 0; j < indirect_blocks.size(); j++) {
+                writeDirectory(index, indirect_blocks[j], it);
+            }
+            break;
         }
     }
 }
@@ -446,13 +524,20 @@ void readData(int index, string &data) {
         return;  // not file
     }
 
+    string part_data;
     for (int i = 0; i < inode.block_cnt; i++) {
         if (i < 10) {
-            string part_data;
             readData(index, inode.addr[i], part_data);
             data += part_data;
         } else {
-            // TODO: indirect
+            // Indirect
+            vector<int> indirect_blocks;
+            readIndirectBlock(inode.addr1, indirect_blocks);
+            for (unsigned j = 0; j < indirect_blocks.size(); j++) {
+                readData(index, indirect_blocks[j], part_data);
+                data += part_data;
+            }
+            break;
         }
     }
 }
@@ -476,10 +561,6 @@ void writeData(int index, string &data) {
     }
 
     rebuildInode(inode, (data.size()+19) / 20);
-    for (int i = 0; i < 10; i++) {  //debug
-        if (i) cout << " ";
-        cout << inode.addr[i];
-    }
 
     string::iterator it = data.begin();
 
@@ -487,9 +568,17 @@ void writeData(int index, string &data) {
         if (i < 10) {
             writeData(index, inode.addr[i], data, it);
         } else {
-            // TODO: indirect
+            // Indirect
+            vector<int> indirect_blocks;
+            readIndirectBlock(inode.addr1, indirect_blocks);
+            for (unsigned j = 0; j < indirect_blocks.size(); j++) {
+                writeData(index, indirect_blocks[j], data, it);
+            }
+            break;
         }
     }
+
+    writeInodeOneBlock(inode, index);
 }
 
 #endif // _BASE_H
