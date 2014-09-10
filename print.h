@@ -51,6 +51,23 @@ void printDirectoryDetail(int index, bool showHide) {
     }
 }
 
+void printDirectoryRecursive(int index, int step) {
+    map<string, int> directory = getDirectory(index);
+    map<string, int>::iterator it;
+    for (it = directory.begin(); it != directory.end(); it++) {
+        if (it->first[0] != '.') {
+            Inode inode = getInode(it->second);
+            for (int i = 0; i < step; i++) {
+                cout << "  ";
+            }
+            cout << it->first << endl;
+            if (inode.mode[0] == 'd') {
+                printDirectoryRecursive(it->second, step+1);
+            }
+        }
+    }
+}
+
 void printPath() {
     cout << endl;
     for (unsigned i = 1; i < path.size(); i++) {
@@ -70,9 +87,9 @@ void printHelp(string command, string usage, string function) {
 }
 
 void printMenu() {
-    cout << "WFS console (version 0.2.0) - Made by Jiaye Wu." << endl;
+    cout << "WFS console (version 1.0.0) - Made by Jiaye Wu." << endl;
     cout << "You can use these commands. Type 'help' to see this list." << endl;
-    printHelp("ls", "[-a|-l|-al]", "List information about the FILEs in current directory.");
+    printHelp("ls", "[-a|-l|-al|-r]", "List information about the FILEs in current directory.");
     printHelp("cd", "[dir]", "Change the current working directory.");
     printHelp("mkdir", "[dir]", "Create the DIRECTORY, if it do not already exist.");
     printHelp("rmdir", "[dir]", "Remove the DIRECTORY, if it is empty.");

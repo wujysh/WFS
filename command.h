@@ -35,6 +35,8 @@ void readCommand() {
                     ls(2);
                 } else if (options[0] == "-a") {
                     ls(3);
+                } else if (options[0] == "-r") {
+                    ls(4);
                 } else {
 //                    ls(options[0], false);
                 }

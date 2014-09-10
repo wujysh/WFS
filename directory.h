@@ -68,6 +68,9 @@ void ls(int type) {
     } else if (type == 2) {  // ls -al
         printDirectoryDetail(path.back().inode, true);
         return;
+    } else if (type == 4) {  // ls -r
+        printDirectoryRecursive(path.back().inode, 0);
+        return;
     }
 }
 
