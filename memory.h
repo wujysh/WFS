@@ -3,6 +3,12 @@
 
 #include "authority.h"
 
+void open(string);
+void close(int);
+void read(int);
+void write(int);
+
+
 void open(string name) {
     // TODO: mode
     int index = path.back().inode;

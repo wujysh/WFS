@@ -1,7 +1,7 @@
 /**
  * Wujy File System (WFS)
- * Version 0.3
- * Date 2014.7.19
+ * Version 1.0
+ * Date 2014.9.10
  */
 
 #include "common.h"

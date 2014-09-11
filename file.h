@@ -3,6 +3,10 @@
 
 #include "authority.h"
 
+void mkfile(string);
+void rmfile(string);
+
+
 void mkfile(string name) {
     int index = path.back().inode;
     Inode inode = getInode(index);

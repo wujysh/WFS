@@ -4,6 +4,11 @@
 #include "common.h"
 #include "base.h"
 
+bool canRead(int);
+bool canWrite(int);
+bool canExecute(int);
+
+
 bool canRead(int index) {
     if (username == "root") return true;
 

@@ -5,6 +5,13 @@
 #include "directory.h"
 #include "common.h"
 
+void inputPassword(string &);
+bool login();
+void switchUser();
+bool createUser();
+bool deleteUser();
+
+
 #ifdef __linux__
     void inputPassword(string &pwd) {
         cin >> pwd;

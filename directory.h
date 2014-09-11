@@ -5,6 +5,14 @@
 #include "common.h"
 #include "authority.h"
 
+void cd(string);
+void ls(int);
+void mkdir(string);
+void rmdir(string);
+void chmod(string, string);
+void rename(string, string);
+
+
 void cd(string name) {
     if (name == ".") {
 
@@ -73,33 +81,6 @@ void ls(int type) {
         return;
     }
 }
-
-//void ls(string name, bool showHide) {
-//    int index = path.back().inode;
-//    Inode inode = getInode(index);
-//    map<string, int> directory = getDirectory(index), childDirectory;
-//
-//    if (directory.find(name) == directory.end()) {
-//        cout << "ls: "<< name << ": No such file or directory" << endl;
-//        return;
-//    }
-//
-//    int childIndex = directory[name];
-//
-//    if (!canRead(childIndex)) {
-//        cout << "ls: " << name << ": No authority" << endl;
-//        return;
-//    }
-//
-//    Inode childInode = inodes[childIndex];
-//
-//    if (childInode.mode[0] != 'd') {
-//        cout << "ls: " << name << ": Not a directory" << endl;
-//        return;
-//    }
-//
-//    printDirectory(childIndex, false);
-//}
 
 void mkdir(string name) {
     int index = path.back().inode;

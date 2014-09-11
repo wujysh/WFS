@@ -6,6 +6,10 @@
 #include "file.h"
 #include "memory.h"
 
+vector<string> getOptions(int);
+void readCommand();
+
+
 vector<string> getOptions(int n) {
     string line, op;
     vector<string> ret;

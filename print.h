@@ -1,6 +1,18 @@
 #ifndef _PRINT_H
 #define _PRINT_H
 
+void printInode(int);
+void printIdleBlockStack();
+void printDirectory(int, bool);
+void printDirectoryDetail(int, bool);
+void printDirectoryRecursive(int, int);
+void printPath();
+void printUsage(string, string);
+void printHelp(string, string, string);
+void printMenu();
+void printOpenFile();
+
+
 void printInode(int index) {
     Inode inode = getInode(index);
 
