@@ -95,6 +95,13 @@ void readCommand() {
             } else {
                 printUsage(command, "[dir|file] [new name]");
             }
+        } else if (command == "search" || command == "find") {
+            options = getOptions(1);
+            if (options.size() == 1) {
+                file_search(options[0]);
+            } else {
+                printUsage(command, "[file|dir]");
+            }
         } else if (command == "open") {
             options = getOptions(1);
             if (options.size() == 1) {

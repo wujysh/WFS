@@ -63,7 +63,7 @@
 
 1402158425 c:\users\wujq\documents\github\wfs\print.h
 
-1405829181 source:/home/wujy/Documents/WFS/main.cpp
+1410446805 source:/home/wujy/Documents/WFS/main.cpp
 	"common.h"
 	"format.h"
 	"user.h"
@@ -91,13 +91,13 @@
 1410009283 /home/wujy/Documents/WFS/base.h
 	"common.h"
 
-1405782802 /home/wujy/Documents/WFS/user.h
+1410448988 /home/wujy/Documents/WFS/user.h
 	"base.h"
 	"directory.h"
 	"common.h"
 	<conio.h>
 
-1410361297 /home/wujy/Documents/WFS/command.h
+1410925620 /home/wujy/Documents/WFS/command.h
 	"print.h"
 	"directory.h"
 	"file.h"
@@ -105,9 +105,9 @@
 
 1401873852 .h"
 
-1410363481 /home/wujy/Documents/WFS/print.h
+1410447639 /home/wujy/Documents/WFS/print.h
 
-1410361297 /home/wujy/Documents/WFS/directory.h
+1410448126 /home/wujy/Documents/WFS/directory.h
 	"print.h"
 	"common.h"
 	"authority.h"
@@ -163,7 +163,7 @@
 
 1401950064 h:\课程\操作系统原理\wfs\file.h
 
-1405870184 /home/wujy/Documents/WFS/file.h
+1410927070 /home/wujy/Documents/WFS/file.h
 	"authority.h"
 
 1402154504 c:\users\wujq\documents\github\wfs\directory.h
@@ -182,7 +182,7 @@
 
 1402157417 c:\users\wujq\documents\github\wfs\memory.h
 
-1405870155 /home/wujy/Documents/WFS/memory.h
+1410449504 /home/wujy/Documents/WFS/memory.h
 	"authority.h"
 
 1402236656 source:/home/wujy/Documents/WFS/common.cpp
@@ -256,7 +256,7 @@
 	"common.h"
 	"base.h"
 
-1405782802 /home/wujy/Documents/WFS/authority.h
+1410449509 /home/wujy/Documents/WFS/authority.h
 	"common.h"
 	"base.h"
 
